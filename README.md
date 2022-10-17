@@ -7,6 +7,11 @@ Git Github
 Technologies recommandés
 Java 17 ou supérieur IntelliJ
 Maven 3
+
+## Lancer le projet 
+mvn spring-boot:run
+Manque plus que le profil et la bdd Mongodb
+
 ## Compétences requise pour la réalisation de ce projet
 Des connaissances en algorithmique
 Des connaissances basiques en probabilités

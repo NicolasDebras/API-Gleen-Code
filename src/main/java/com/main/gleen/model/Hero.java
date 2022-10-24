@@ -20,7 +20,7 @@ public class Hero {
         ASSASSIN,
         MAGE,
     }
-    @Id
+    @Id @Getter @Setter
     private String id;
 
     @Getter @Setter

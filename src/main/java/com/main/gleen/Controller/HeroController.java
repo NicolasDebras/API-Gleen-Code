@@ -2,17 +2,12 @@ package com.main.gleen.Controller;
 
 import com.main.gleen.model.Hero;
 import com.main.gleen.service.HeroService;
-import lombok.Getter;
-import org.bson.types.ObjectId;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @RestController()
 public class HeroController {
@@ -22,13 +17,25 @@ public class HeroController {
     private HeroService heroService;
 
     @GetMapping("/hero")
-    public Iterable<Hero> getHeros(){
-        return heroService.getHeros();
+    public ResponseEntity<Iterable<Hero>> getHeros(){
+        try {
+            Iterable<Hero> herosFound =  heroService.getHeros();
+            return new ResponseEntity<>(herosFound, HttpStatus.FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("/hero/{id}")
-    public Optional<Hero> getHero(@PathVariable("id")String id){
-        return heroService.getHero(id);
+    public ResponseEntity<Hero> getHero(@PathVariable("id")String id){
+        try {
+            Optional<Hero> heroFound = heroService.getHero(id);
+            return heroFound.map(hero -> new ResponseEntity<>(hero, HttpStatus.FOUND)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 

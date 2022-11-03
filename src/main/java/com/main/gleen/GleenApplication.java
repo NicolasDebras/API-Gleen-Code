@@ -1,9 +1,7 @@
 package com.main.gleen;
 
-import com.main.gleen.model.Hero;
-import com.main.gleen.repository.HeroRepository;
+import com.main.gleen.infrastructure.adapter.mongodb.repository.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;

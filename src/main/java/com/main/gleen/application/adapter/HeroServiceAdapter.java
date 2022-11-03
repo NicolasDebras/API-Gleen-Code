@@ -4,12 +4,14 @@ import com.main.gleen.application.api.restful.HeroService;
 import com.main.gleen.domain.model.Hero;
 import com.main.gleen.domain.spi.HeroPersistencePort;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class HeroServiceAdapter implements HeroService {
 
-    private HeroPersistencePort heroPersistencePort;
+    private  HeroPersistencePort heroPersistencePort;
 
 
     @Autowired

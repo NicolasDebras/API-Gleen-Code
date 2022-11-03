@@ -17,5 +17,5 @@ public interface HeroController {
     ResponseEntity<Void> removeProduct(@RequestBody Hero hero);
 
     @GetMapping("/hero/{heroId}")
-    ResponseEntity<Hero> getProductById(@PathVariable Integer heroId);
+    ResponseEntity<Hero> getProductById(@PathVariable String heroId);
 }

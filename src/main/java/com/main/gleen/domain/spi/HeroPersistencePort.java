@@ -1,6 +1,7 @@
 package com.main.gleen.domain.spi;
 
 import com.main.gleen.domain.model.Hero;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

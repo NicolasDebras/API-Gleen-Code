@@ -15,6 +15,5 @@
 
     <modules>
         <module>mongodb-adapter</module>
-        <module>mongodb-adapter</module>
     </modules>
 </project>

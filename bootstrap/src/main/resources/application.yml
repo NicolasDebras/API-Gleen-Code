@@ -1,0 +1,9 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+  compression:
+    enabled: true
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://root:root@apigreencode.jebtr9u.mongodb.net/?

@@ -16,3 +16,4 @@ public class ApplicationConfiguration {
     return new ObjectMapper().registerModule(new VavrModule());
   }
 }
+

@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Import;
 
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
 @Import({ApplicationConfiguration.class})
 @SpringBootApplication(scanBasePackages = "com.main")
 

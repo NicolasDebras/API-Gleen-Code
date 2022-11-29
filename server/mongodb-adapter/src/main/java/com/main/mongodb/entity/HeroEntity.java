@@ -6,10 +6,10 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
+
 import java.util.UUID;
 
-@Entity
+
 @Getter
 @Setter
 @Builder
@@ -29,12 +29,5 @@ public class HeroEntity {
     private SpecialityHero specialityHero;
     private RarityHero rarityHero;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
-    @javax.persistence.Id
-    public UUID getId() {
-        return id;
-    }
 }

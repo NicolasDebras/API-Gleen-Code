@@ -39,5 +39,4 @@ public class Hero {
     private int lvl = 0;
     @Getter @Setter
     private Rarity rarity;
-
 }

@@ -74,6 +74,7 @@ Le deck d’un joueur est l’endroit où ce dernier stocke ses cartes. Il n’y
 Système de combat
 Chaque joueur peut accéder à la liste des joueurs inscrits et à leurs decks. Il peut ensuite décider d’engager un combat en tour par tour contre une carte d’un autre joueur avec une carte de son propre deck. Le premier héros dont les points de vie tombent à zéro à perdu. Tous les 5 combats gagnés, le joueur remporte un jetons d’ouverture de pack. Afin de garantir un semblant d’équité, un joueur ne peut attaquer un héros que si ce dernier à un niveau au moins égal à celui du héros qu’il a choisit d’utiliser pour attaquer.
 Fonctionnalités attendues
+
 1. Créations des héros en base de données
 2. Rechercher les héros disponibles
 3. Création d’un compte joueur avec solde de jetons et deck en base de données
@@ -81,6 +82,8 @@ Fonctionnalités attendues
 5. Rechercher des joueurs et visualiser leurs decks
 6. Engager un combat entre un héros et celui d’un autre joueur
 7. Pouvoir retrouver tous les combats d’un héros (héros adverse, résultat du combat)
+
+
 Critères de notation
 • Le projet respecte l’architecture Hexagonale : 5 points
 • Le projet respecte les principes SOLID : 5 points

@@ -19,7 +19,7 @@ public class HeroCreatorService implements HeroCreatorApi {
         return HeroValidator.validate(hero)
                 .toEither()
                 .peekLeft(
-                        error -> log.error("An error occurred while validating Hero : {}", error)
-                ).flatMap(spi::save);
+                        error  -> log.error("An error occurred while validating hero : {}", error))
+                .flatMap(spi::save);
     }
 }

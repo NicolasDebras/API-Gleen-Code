@@ -1,6 +1,5 @@
 package com.main.domain.functionnal.model;
-
-public enum SpecialityHero {
+public enum Speciality {
     TANK,
     ASSASSIN,
     MAGE,

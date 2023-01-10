@@ -9,3 +9,4 @@ spring:
     mongodb:
       uri: mongodb+srv://root:root@apigreencode.jebtr9u.mongodb.net/?
       database: PlayGame
+      uuid-representation: standard

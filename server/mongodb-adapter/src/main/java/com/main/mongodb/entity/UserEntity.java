@@ -3,11 +3,17 @@ package com.main.mongodb.entity;
 
 import lombok.Builder;
 import lombok.Value;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("hero")
+import java.util.UUID;
+
+@Document("user")
 @Builder
 @Value
 public class UserEntity {
+
+    @Id
+    private UUID id;
     String username;
 }

@@ -13,7 +13,8 @@ public class Hero {
     private int power;
     private int armor;
     private Speciality speciality;
-    @Builder.Default private int lvl = 0;
+    @Builder.Default
+    private int lvl = 0;
     private Rarity rarity;
 
     private int experiencePoint;

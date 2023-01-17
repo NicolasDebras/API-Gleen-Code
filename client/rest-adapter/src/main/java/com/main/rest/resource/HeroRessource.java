@@ -6,10 +6,7 @@ import com.main.rest.dto.HeroCreationDto;
 import com.main.rest.mapper.HeroDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.main.rest.mapper.HeroDtoMapper.heroCreationToDomain;
 import static com.main.rest.mapper.HeroDtoMapper.toDo;
@@ -23,9 +20,11 @@ public class HeroRessource {
 
     @PostMapping
     public ResponseEntity<Object> createHero(@RequestBody HeroCreationDto dto){
-        var hello = heroCreationToDomain(dto);
-        var yesy = heroCreatorApi.create(hello);
-        toDo(yesy.get());
-        return null;
+        return heroCreatorApi
+                .create(heroCreationToDomain(dto))
+                .map(HeroDtoMapper::toDo)
+                .fold(ResponseEntity.badRequest()::body, ResponseEntity::ok);
     }
+
+
 }

@@ -4,12 +4,16 @@ server:
   compression:
     enabled: true
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
   data:
     mongodb:
       uri: mongodb+srv://root:root@apigreencode.jebtr9u.mongodb.net/?
       database: PlayGame
       uuid-representation: standard
+
 
 
 

@@ -9,7 +9,9 @@ public interface UserEntityMapper {
 
     static User toDomain(UserEntity entity){
         return User.builder()
+                .id(entity.getId().toString())
                 .pseudo(entity.getUsername())
+                .jeton(entity.getJeton())
                 .build();
     }
 
@@ -17,6 +19,7 @@ public interface UserEntityMapper {
         return UserEntity.builder()
                 .id(UUID.randomUUID())
                 .username(domain.getPseudo())
+                .jeton(domain.getJeton())
                 .build();
     }
 }

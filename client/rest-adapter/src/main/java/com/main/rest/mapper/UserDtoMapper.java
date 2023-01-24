@@ -2,12 +2,15 @@ package com.main.rest.mapper;
 
 import com.main.domain.functionnal.model.User;
 import com.main.rest.dto.UserCreationDto;
+import com.main.rest.dto.UserCreationResponseDto;
 
 public interface UserDtoMapper {
 
-    static UserCreationDto toDo(User user){
-        return new UserCreationDto(
-                user.getPseudo()
+    static UserCreationResponseDto toDo(User user){
+        return new UserCreationResponseDto(
+                user.getId(),
+                user.getPseudo(),
+                user.getJeton()
         );
     }
 

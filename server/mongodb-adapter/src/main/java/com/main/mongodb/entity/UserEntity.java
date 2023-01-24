@@ -15,5 +15,9 @@ public class UserEntity {
 
     @Id
     private UUID id;
-    String username;
+    private String username;
+
+    private int jeton;
+
+
 }

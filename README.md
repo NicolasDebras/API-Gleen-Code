@@ -71,16 +71,23 @@ Légendaire : 15% Rare : 35% Commune : 50%
 
 ## Deck
 Le deck d’un joueur est l’endroit où ce dernier stocke ses cartes. Il n’y a pas de limite au nombre maximum de cartes possédées.
-Système de combat
-Chaque joueur peut accéder à la liste des joueurs inscrits et à leurs decks. Il peut ensuite décider d’engager un combat en tour par tour contre une carte d’un autre joueur avec une carte de son propre deck. Le premier héros dont les points de vie tombent à zéro à perdu. Tous les 5 combats gagnés, le joueur remporte un jetons d’ouverture de pack. Afin de garantir un semblant d’équité, un joueur ne peut attaquer un héros que si ce dernier à un niveau au moins égal à celui du héros qu’il a choisit d’utiliser pour attaquer.
+
+## Système de combat
+Chaque joueur peut accéder à la liste des joueurs inscrits et à leurs decks. Il peut ensuite décider d’engager un combat en tour 
+par tour contre une carte d’un autre joueur avec une carte de son propre deck. Le premier héros dont les points de vie tombent à zéro à perdu. 
+Tous les 5 combats gagnés, le joueur remporte un jetons d’ouverture de pack. Afin de garantir un semblant d’équité, 
+un joueur ne peut attaquer un héros que si ce dernier à un niveau au moins égal à celui du héros qu’il a choisit d’utiliser pour attaquer.
 Fonctionnalités attendues
-1. Créations des héros en base de données
-2. Rechercher les héros disponibles
+
+1. Créations des héros en base de données //fait sans validation
+2. Rechercher les héros disponibles 
 3. Création d’un compte joueur avec solde de jetons et deck en base de données
 4. Ouverture de packs et ajout des cartes au deck du joueur
 5. Rechercher des joueurs et visualiser leurs decks
 6. Engager un combat entre un héros et celui d’un autre joueur
 7. Pouvoir retrouver tous les combats d’un héros (héros adverse, résultat du combat)
+
+
 Critères de notation
 • Le projet respecte l’architecture Hexagonale : 5 points
 • Le projet respecte les principes SOLID : 5 points
@@ -90,3 +97,26 @@ cours : 5 points
 fonctionnalités) : 5 points
 • Point bonus : le projet utilise la librairie Vavr ou toute autre librairie permettant l’écriture du code
 selon les principes de la programmation fonctionnelle
+
+
+2. Rechercher les héros disponibles
+Il faut faire un endpoint pour chercher tout les cartes 
+Un autre pour tout les recherches en point précis nom de la carte ou de l'id 
+
+3. Création d’un compte joueur avec solde de jetons et deck en base de données
+Juste un endpoint pour créer un compte 
+
+4. Ouverture de packs et ajout des cartes au deck du joueur 
+Ajout d'un endpoint avec un get et l'id du joueur et le type de pack de joueur
+
+5.  Rechercher des joueurs et visualiser leurs decks 
+rechercher les joueurs avec l'id et leur deck en array json
+
+6. Engager un combat entre un héros et celui d’un autre joueur
+Avec un get avec json avec les deux ID et leur deck choisi 
+Avec un json avec l'id du gagnant et l'id du perdant 
+
+7. Pouvoir retrouver tous les combats d’un héros (héros adverse, résultat du combat)
+
+
+

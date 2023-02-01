@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.main</groupId>
-        <artifactId>gleen</artifactId>
+        <artifactId>client</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -29,5 +29,4 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
-
 </project>

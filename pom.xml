@@ -20,6 +20,7 @@
 		<module>server</module>
 		<module>client</module>
         <module>boostrap</module>
+        <module>client</module>
     </modules>
 
 	<properties>

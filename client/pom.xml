@@ -14,7 +14,6 @@
 
     <modules>
         <module>rest-adapter</module>
+        <module>rest-adapter</module>
     </modules>
-
-
 </project>

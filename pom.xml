@@ -16,11 +16,11 @@
 	<name>gleen</name>
 
 	<modules>
-		<module>bootstrap</module>
-		<module>client/rest-adapter</module>
 		<module>domain</module>
 		<module>server</module>
-	</modules>
+		<module>client</module>
+        <module>boostrap</module>
+    </modules>
 
 	<properties>
 		<java.version>17</java.version>

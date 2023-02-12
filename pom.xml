@@ -27,7 +27,7 @@
 		<java.version>17</java.version>
 		<spring-boot.version>2.4.11</spring-boot.version>
 		<lombok.version>1.18.20</lombok.version>
-		<vavr.version>0.9.0</vavr.version>
+		<vavr.version>0.10.4</vavr.version>
 		<assertj-core.version>3.21.0</assertj-core.version>
 		<assertj-vavr.version>0.4.2</assertj-vavr.version>
 		<junit-jupiter.version>5.6.3</junit-jupiter.version>

@@ -1,19 +1,20 @@
 package com.main.functional.service.validation;
 
-import com.main.ApplicationError;
-import com.main.functional.model.HeroCreate;
-import io.vavr.control.Validation;
+import com.main.functional.model.Hero;
 import lombok.val;
 
-public interface HeroValidator {
+import java.util.Optional;
 
-    static Validation<ApplicationError, HeroCreate> validate(HeroCreate hero) {
+public interface HeroCreateValidator {
+
+
+    static Optional<Hero> validate(Hero hero)  {
         val name = hero.getName();
         val speciality = hero.getSpeciality();
         val rarity = hero.getRarity();
         return name != null && name.length() > 3 && name.length() < 20
                 && speciality != null && rarity != null
-                ? Validation.valid(hero)
-                : Validation.invalid(new ApplicationError("Invalid name", null, name, null));
+                ? Optional.of(hero)
+                :  Optional.empty();
     }
 }

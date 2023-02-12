@@ -6,14 +6,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class Hero {
+public class HeroCreate {
 
     private String name;
-    private int attack;
-
-    private int power;
-
-    private int armor;
-    private Speciality speciality;
-    private Rarity rarity;
+    private String speciality;
+    private String rarity;
 }

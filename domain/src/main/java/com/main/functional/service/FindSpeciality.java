@@ -1,9 +1,7 @@
 package com.main.functional.service;
 
-import com.main.ApplicationError;
 import com.main.functional.model.Speciality;
-import com.main.port.server.HeroCreatePersistenceSpi;
-import io.vavr.control.Either;
+import com.main.port.server.SpecialityPersistanceSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class FindSpeciality {
 
-    private final HeroCreatePersistenceSpi spi;
-    public Either<ApplicationError, Speciality> findSpeciality(String speciality) {
-        return spi.findSpeciality(speciality)
-                .toEither(() -> new ApplicationError("Speciality not found", null, speciality, null));
+    private final SpecialityPersistanceSpi spi;
+
+    public  Speciality find(String speciality) {
+        return spi.findByName(speciality).orElseThrow(() -> new IllegalArgumentException("Speciality not found"));
     }
 }

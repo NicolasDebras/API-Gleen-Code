@@ -12,8 +12,8 @@ import com.main.ports.server.SpecialityPersistenceSpi;
 import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
-import java.util.UUID;
 
 
 @Slf4j
@@ -28,25 +28,36 @@ public class HeroCreatorService implements HeroCreatorApi {
 
     @Override
     public Either<ApplicationError, Hero> create(Hero hero) {
-        return HeroCreatedValidation.validate(hero)
-                .toEither()
-                .peekLeft(error -> log.error("An error occurred while validating hero : {}", error))
-                .flatMap(spi::save)
-                .peekLeft(error -> log.error("An error occurred while saving hero : {}", error))
-                .flatMap(heroSaved -> buildHeroReturn(heroSaved, heroSaved.getId()));
+        val heroValidated = HeroCreatedValidation.validate(hero);
+        if(!heroValidated.isValid()){
+            return Either.left(new ApplicationError("Not valid Hero", null, hero, null));
+        }
+        val rarity = findRarity(hero.getRarity().getName());
+        if(rarity.isLeft()){
+            log.error("An error occurred while validating hero : {}", rarity.getLeft());
+            return Either.left(rarity.getLeft());
+        }
+        val speciality = findSpeciality(hero.getSpeciality().getName());
+        if(speciality.isLeft()){
+            log.error("An error occurred while validating hero : {}", speciality.getLeft());
+            return Either.left(speciality.getLeft());
+        }
+        val heroSaved = spi.save(hero);
+        if(heroSaved.isLeft()){
+            log.error("An error occurred while validating hero : {}", heroSaved.getLeft());
+            return Either.left(heroSaved.getLeft());
+        }
+        return Either.right(buildHeroReturn(heroValidated.get(), speciality.get(), rarity.get()));
+
     }
 
-    private Either<ApplicationError, Hero> buildHeroReturn(Hero hero, UUID id) {
-        return findRarity(hero.getRarity().getName())
-                .peekLeft(error -> log.error("An error occurred while finding rarity : {}", error))
-                .flatMap(rarity -> findSpeciality(hero.getSpeciality().getName())
-                        .peekLeft(error -> log.error("An error occurred while finding speciality : {}", error))
-                        .map(speciality -> Hero.builder()
-                                .id(id)
-                                .name(hero.getName())
-                                .rarity(rarity)
-                                .speciality(speciality).build())
-                );
+    private Hero buildHeroReturn(Hero hero, Speciality speciality, Rarity rarity) {
+        return Hero.builder()
+                .id(hero.getId())
+                .name(hero.getName())
+                .speciality(speciality)
+                .rarity(rarity)
+                .build();
     }
 
     private Either<ApplicationError, Rarity> findRarity(String rarity) {

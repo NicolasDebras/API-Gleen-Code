@@ -76,12 +76,12 @@ class HeroCreatorServiceTest {
 
         val actual = service.create(given);
 
-        //Pourtant, le test passe quand je mets que cette condition ci-dessous
+        //Working with Junit
         assertEquals(actual.get(), result);
         verifyNoMoreInteractions(spiRarity);
         verifyNoMoreInteractions(spiSpeciality);
         verifyNoMoreInteractions(spi);
-        //Mais quand je mets l'assertion Vavr la condition ci-dessous, le test ne passe pas
+        //Not working with AssertJ
         assertThat(actual).containsRightSame(result);
 
 

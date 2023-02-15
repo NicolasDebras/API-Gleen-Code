@@ -16,10 +16,11 @@
 	<name>gleen</name>
 
 	<modules>
-		<module>bootstrap</module>
-		<module>client/rest-adapter</module>
-		<module>domain</module>
+
+		<module>boostrap</module>
 		<module>server</module>
+		<module>domain</module>
+		<module>client</module>
 	</modules>
 
 	<properties>

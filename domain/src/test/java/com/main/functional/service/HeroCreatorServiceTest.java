@@ -81,7 +81,7 @@ class HeroCreatorServiceTest {
         verifyNoMoreInteractions(spiRarity);
         verifyNoMoreInteractions(spiSpeciality);
         verifyNoMoreInteractions(spi);
-        //Not working with AssertJ
+        //Not working with AssertJ Vavr
         assertThat(actual).containsRightSame(result);
 
 

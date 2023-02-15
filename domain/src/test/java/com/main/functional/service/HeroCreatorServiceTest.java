@@ -9,6 +9,7 @@ import com.main.ports.server.RarityPersistenceSpi;
 import com.main.ports.server.SpecialityPersistenceSpi;
 import io.vavr.control.Option;
 import lombok.val;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +18,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.UUID;
 
 import static io.vavr.API.Right;
-import static org.mockito.Mockito.when;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -37,9 +42,14 @@ class HeroCreatorServiceTest {
     @Test
     @DisplayName("should create hero")
     void should_create_hero() {
+        val idHero = UUID.randomUUID();
         val specialityHeroDco = Speciality.builder().name("Wizard").build();
         val rarityHeroDco = Rarity.builder().name("Common").build();
-        val given = Hero.builder().name("test").speciality(specialityHeroDco).rarity(rarityHeroDco).build();
+        val given = Hero.builder()
+                .id(idHero)
+                .name("test")
+                .speciality(specialityHeroDco)
+                .rarity(rarityHeroDco).build();
         val advantageOtherHeroDao = AdvantageOtherHero.builder()
                 .name("Assassin")
                 .power(25)
@@ -56,6 +66,7 @@ class HeroCreatorServiceTest {
                 .advantageOtherHeroes(List.of(advantageOtherHeroDao))
                 .build();
         val result = Hero.builder()
+                .id(idHero)
                 .name("test")
                 .speciality(specialityDao)
                 .rarity(rarityDao)
@@ -66,5 +77,8 @@ class HeroCreatorServiceTest {
 
         val actual = service.create(given);
         assertThat(actual).containsRightSame(result);
+        verifyNoInteractions(spi);
+        verifyNoInteractions(spiRarity);
+        verifyNoInteractions(spiSpeciality);
     }
 }

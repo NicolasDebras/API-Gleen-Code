@@ -13,6 +13,8 @@ import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.UUID;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,15 +33,17 @@ public class HeroCreatorService implements HeroCreatorApi {
                 .peekLeft(error -> log.error("An error occurred while validating hero : {}", error))
                 .flatMap(spi::save)
                 .peekLeft(error -> log.error("An error occurred while saving hero : {}", error))
-                .flatMap(this::buildHeroReturn);
+                .flatMap(heroSaved -> buildHeroReturn(heroSaved, heroSaved.getId()));
     }
 
-    private Either<ApplicationError, Hero> buildHeroReturn(Hero hero) {
+    private Either<ApplicationError, Hero> buildHeroReturn(Hero hero, UUID id) {
         return findRarity(hero.getRarity().getName())
                 .peekLeft(error -> log.error("An error occurred while finding rarity : {}", error))
                 .flatMap(rarity -> findSpeciality(hero.getSpeciality().getName())
                         .peekLeft(error -> log.error("An error occurred while finding speciality : {}", error))
                         .map(speciality -> Hero.builder()
+                                .id(id)
+                                .name(hero.getName())
                                 .rarity(rarity)
                                 .speciality(speciality).build())
                 );

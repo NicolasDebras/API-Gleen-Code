@@ -11,6 +11,6 @@ public interface HeroCreatedValidation {
                 && hero.getName().length() > 3
                 && hero.getRarity() != null
                 ? Validation.valid(hero)
-                : Validation.invalid(new ApplicationError("Invalid rarity percentage", null, hero.getRarity().getPercentage(), null));
+                : Validation.invalid(new ApplicationError("Invalid Hero ", null, hero.getRarity().getPercentage(), null));
     }
 }

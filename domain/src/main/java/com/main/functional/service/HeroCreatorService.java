@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 
-
 @Slf4j
 @RequiredArgsConstructor
 public class HeroCreatorService implements HeroCreatorApi {
@@ -29,21 +28,21 @@ public class HeroCreatorService implements HeroCreatorApi {
     @Override
     public Either<ApplicationError, Hero> create(Hero hero) {
         val heroValidated = HeroCreatedValidation.validate(hero);
-        if(!heroValidated.isValid()){
+        if (!heroValidated.isValid()) {
             return Either.left(new ApplicationError("Not valid Hero", null, hero, null));
         }
         val rarity = findRarity(hero.getRarity().getName());
-        if(rarity.isLeft()){
+        if (rarity.isLeft()) {
             log.error("An error occurred while validating hero : {}", rarity.getLeft());
             return Either.left(rarity.getLeft());
         }
         val speciality = findSpeciality(hero.getSpeciality().getName());
-        if(speciality.isLeft()){
+        if (speciality.isLeft()) {
             log.error("An error occurred while validating hero : {}", speciality.getLeft());
             return Either.left(speciality.getLeft());
         }
         val heroSaved = spi.save(hero);
-        if(heroSaved.isLeft()){
+        if (heroSaved.isLeft()) {
             log.error("An error occurred while validating hero : {}", heroSaved.getLeft());
             return Either.left(heroSaved.getLeft());
         }

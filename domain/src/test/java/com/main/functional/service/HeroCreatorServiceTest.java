@@ -76,15 +76,12 @@ class HeroCreatorServiceTest {
 
         val actual = service.create(given);
 
-        //Working with Junit
+        //THEN
+        assertThat(actual).containsOnRight(result);
         assertEquals(actual.get(), result);
         verifyNoMoreInteractions(spiRarity);
         verifyNoMoreInteractions(spiSpeciality);
         verifyNoMoreInteractions(spi);
-        //Not working with AssertJ Vavr
-        assertThat(actual).containsRightSame(result);
-
-
 
 
     }
@@ -107,17 +104,22 @@ class HeroCreatorServiceTest {
     }
 
     @Test
-    @DisplayName("should create hero with  rarity not found")
+    @DisplayName("should create hero with  speciality not found")
     void should_create_hero_with_speciality_not_found() {
         val idHero = UUID.randomUUID();
         val specialityHeroDco = Speciality.builder().name("Wizard").build();
         val rarityHeroDco = Rarity.builder().name("Common").build();
+        val rarityDao = Rarity.builder()
+                .name("Common")
+                .percentage(0.0)
+                .build();
         val given = Hero.builder()
                 .id(idHero)
                 .name("test")
                 .speciality(specialityHeroDco)
                 .rarity(rarityHeroDco).build();
-        when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.none());
+        when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.of(rarityDao));
+        when(spiSpeciality.findByName(any())).thenReturn(Option.none());
         val actual = service.create(given);
         assertThat(actual).containsLeftInstanceOf(ApplicationError.class);
     }
@@ -154,6 +156,23 @@ class HeroCreatorServiceTest {
         when(spiSpeciality.findByName(specialityHeroDco.getName())).thenReturn(Option.of(specialityDao));
         val actual = service.create(given);
         assertThat(actual).containsLeftSame(error);
+    }
+
+
+    @Test
+    @DisplayName("Error hero DCO is not valid")
+    void should_error_not_Valid(){
+        val idHero = UUID.randomUUID();
+        val specialityHeroDco = Speciality.builder().name("Wizard").build();
+        val rarityHeroDco = Rarity.builder().name("Common").build();
+        val given = Hero.builder()
+                .id(idHero)
+                .name("tes")
+                .speciality(specialityHeroDco)
+                .rarity(rarityHeroDco).build();
+        val actual = service.create(given);
+        val error = new ApplicationError("Not valid Hero", null, given, null);
+        assertThat(actual).containsOnLeft(error);
     }
 
 

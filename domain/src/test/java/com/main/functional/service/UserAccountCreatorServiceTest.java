@@ -48,7 +48,6 @@ class UserAccountCreatorServiceTest {
         val given = User.builder().username("test").build();
         val error = new ApplicationError("An error occurred", null, null, null);
         when(spi.save(given)).thenReturn(Left(error));
-
         val actual = service.create(given);
         assertThat(actual).containsLeftSame(error);
     }

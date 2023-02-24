@@ -29,28 +29,27 @@ public class FighterService implements FightCardApi {
     private final HistoricalFightPersistenceSpi historicalFightPersistenceSpi;
 
     @Override
-    public Either<ApplicationError, Fighter> fightCard(Fighter fighter) {
+    public Either<ApplicationError, Card> fightCard(Fighter fighter) {
         val defenseCard = findCardByUUID(fighter.getDefenseCard().getId());
         val attackCard = findCardByUUID(fighter.getAttackCard().getId());
-        if (defenseCard.isLeft() || attackCard.isLeft()) {
+        if (defenseCard.isLeft()) {
             return Either.left(defenseCard.getLeft());
         }
+        if (attackCard.isLeft()) {
+            return Either.left(attackCard.getLeft());
+        }
         if (!isPossibleToFight(defenseCard.get(), attackCard.get())) {
-            return Either.left(new ApplicationError("The defense card is not possible to fight", null, defenseCard.get().getId(), null));
+            return Either.left(new ApplicationError("The  defense card is not possible to fight", null, defenseCard.get().getId(), null));
         }
         val winner = fight(defenseCard.get(), attackCard.get());
         if (winner.isEmpty()) {
-            return Either.left(new ApplicationError("The fight is a draw", null, null, null));
+            return Either.left(new ApplicationError("The fight is a draw error", null, null, null));
         }
         val winnerCardUpdated = updateCardWining(winner.get().equals(defenseCard.get().getId()) ? defenseCard.get() : attackCard.get());
         if (winnerCardUpdated.isLeft()) {
             return Either.left(winnerCardUpdated.getLeft());
         }
-
-        return Either.right(Fighter.builder()
-                .attackCard(attackCard.get())
-                .defenseCard(defenseCard.get())
-                .build());
+        return Either.right(winnerCardUpdated.get());
     }
 
     private Either<ApplicationError, Card> findCardByUUID(UUID idCard) {
@@ -62,43 +61,56 @@ public class FighterService implements FightCardApi {
         double defenseCardHealth = calculateHealth(defenseCard);
         val defenseCardAttack = calculateAttack(defenseCard, attackCard.getHeroType().getName());
         val attackCardAttack = calculateAttack(attackCard, defenseCard.getHeroType().getName());
+        val defenseCardArmor = calculateArmor(defenseCard);
         double attackCardHealth = calculateHealth(attackCard);
+        val attackCardArmor = calculateArmor(attackCard);
+        val damageDefenseCard = calculateDamage(attackCardAttack, defenseCardArmor);
+        val damageAttackCard = calculateDamage(defenseCardAttack, attackCardArmor);
         while (defenseCardHealth > 0 && attackCardHealth > 0) {
-            defenseCardHealth -= attackCardAttack;
-            if (defenseCardHealth >= 0) {
-                log.info("The winner is {}", attackCard.getHeroType().getName());
-                val resultFight = saveFight(attackCard.getId(), defenseCard.getId());
-                if (resultFight.isLeft()) {
-                    log.error("Not possible to save fight", resultFight.getLeft());
-                    return Option.none();
-                }
-                return Option.of(attackCard.getId());
+            defenseCardHealth = defenseCardHealth - damageDefenseCard;
+            attackCardHealth = attackCardHealth - damageAttackCard;
+        }
+        if (defenseCardHealth > attackCardHealth) {
+            log.info("The winner is the defense card");
+            val save = saveFight(attackCard.getId(), defenseCard.getId());
+            if (save.isLeft()) {
+                return Option.none();
             }
-            attackCardHealth -= defenseCardAttack;
-            if (attackCardHealth >= 0) {
-                log.info("The winner is {}", defenseCard.getHeroType().getName());
-                val resultFight = saveFight(defenseCard.getId() , attackCard.getId());
-                if (resultFight.isLeft()) {
-                    log.error("Not possible to save fight", resultFight.getLeft());
-                    return Option.none();
-                }
-                return Option.of(defenseCard.getId());
+            return Option.of(defenseCard.getId());
+        }else if (attackCardHealth > defenseCardHealth) {
+            log.info("The winner is the attack card");
+            val save= saveFight(defenseCard.getId(), attackCard.getId());
+            if (save.isLeft()) {
+                return Option.none();
             }
+            return Option.of(attackCard.getId());
         }
         return Option.none();
+    }
+
+    private int calculateDamage(Double attack, Double armor) {
+        return (int) (attack - armor);
     }
 
 
 
     private Boolean isPossibleToFight(Card defenseCard, Card attackCard) {
+        if (defenseCard.getId() == attackCard.getId()) {
+            log.info("The cards are the same");
+            return false;
+        }
+        if (defenseCard.getIdUser() == attackCard.getIdUser()) {
+            log.info("The cards are from the same user");
+            return false;
+        }
         return defenseCard.getLevel().getLevel() >= attackCard.getLevel().getLevel();
     }
 
     private Either<ApplicationError, Card> updateCardWining(Card card) {
-        if (card.getExperience() < 5) {
+        if (card.getExperience() < 4) {
             return cardPersistenceSpi.updateExperience(card);
         } else {
-            val updateUserToken = userAccountPersistenceSpi.updateToken(card.getId());
+            val updateUserToken = userAccountPersistenceSpi.updateToken(card.getIdUser());
             if (updateUserToken.isLeft()) {
                 return Either.left(updateUserToken.getLeft());
             }
@@ -114,6 +126,13 @@ public class FighterService implements FightCardApi {
         val resultAttack = attackBase + (attackBase * percentageLevel) + (attackBase * rarityPercentage);
         val advantage = isAdvantageToOpponent(card.getHeroType().getSpeciality().getAdvantageOtherHeroes(), nameOpponent);
         return resultAttack + (resultAttack * advantage);
+    }
+
+    private Double calculateArmor(Card card) {
+        val armorBase = card.getHeroType().getSpeciality().getArmor();
+        val percentageLevel = card.getLevel().getExp();
+        val rarityPercentage = card.getHeroType().getRarity().getPercentage();
+        return armorBase + (armorBase * percentageLevel) + (armorBase * rarityPercentage);
     }
 
     private Double calculateHealth(Card card) {

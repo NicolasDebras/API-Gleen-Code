@@ -6,6 +6,7 @@ import com.main.functional.service.validation.UserCreatedValidator;
 import com.main.ports.client.UserAccountCreatorApi;
 import com.main.ports.server.UserAccountPersistenceSpi;
 import io.vavr.control.Either;
+import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +21,9 @@ public class UserAccountCreatorService implements UserAccountCreatorApi {
         return UserCreatedValidator.validate(user)
                 .toEither()
                 .peekLeft(error -> log.error("An error occurred while validating user : {}", error))
-                .flatMap(spi::save);
+                .flatMap(hero -> spi.findByUsername(hero.getUsername())
+                        .isEmpty() ? spi.save(hero) : Either.left(new ApplicationError("User already exists", null, hero, null))
+                );
+
     }
 }

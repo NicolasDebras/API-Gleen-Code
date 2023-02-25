@@ -73,7 +73,7 @@ class HeroCreatorServiceTest {
         when(spi.save(given)).thenReturn(Right(given));
         when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.of(rarityDao));
         when(spiSpeciality.findByName(specialityHeroDco.getName())).thenReturn(Option.of(specialityDao));
-
+        when(spi.findByName(given.getName())).thenReturn(Option.none());
         val actual = service.create(given);
 
         //THEN
@@ -98,9 +98,10 @@ class HeroCreatorServiceTest {
                 .speciality(specialityHeroDco)
                 .rarity(rarityHeroDco).build();
         when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.none());
+        when(spi.findByName(given.getName())).thenReturn(Option.none());
         val actual = service.create(given);
         assertThat(actual).containsLeftInstanceOf(ApplicationError.class);
-        verifyNoInteractions(spi);
+        verifyNoMoreInteractions(spi);
     }
 
     @Test
@@ -120,6 +121,7 @@ class HeroCreatorServiceTest {
                 .rarity(rarityHeroDco).build();
         when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.of(rarityDao));
         when(spiSpeciality.findByName(any())).thenReturn(Option.none());
+        when(spi.findByName(given.getName())).thenReturn(Option.none());
         val actual = service.create(given);
         assertThat(actual).containsLeftInstanceOf(ApplicationError.class);
     }
@@ -152,6 +154,7 @@ class HeroCreatorServiceTest {
                 .build();
         val error = new ApplicationError("An error occurred", null, null, null);
         when(spi.save(given)).thenReturn(Left(error));
+        when(spi.findByName(given.getName())).thenReturn(Option.none());
         when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.of(rarityDao));
         when(spiSpeciality.findByName(specialityHeroDco.getName())).thenReturn(Option.of(specialityDao));
         val actual = service.create(given);
@@ -175,5 +178,26 @@ class HeroCreatorServiceTest {
         assertThat(actual).containsOnLeft(error);
     }
 
+    @Test
+    @DisplayName("Error hero with the same name already exists")
+    void should_error_hero_with_the_same_name_already_exists() {
+        val idHero = UUID.randomUUID();
+        val specialityHeroDco = Speciality.builder().name("Wizard").build();
+        val rarityHeroDco = Rarity.builder().name("Common").build();
+        val given = Hero.builder()
+                .id(idHero)
+                .name("test")
+                .speciality(specialityHeroDco)
+                .rarity(rarityHeroDco).build();
+        val heroDao = Hero.builder()
+                .id(idHero)
+                .name("test")
+                .speciality(specialityHeroDco)
+                .rarity(rarityHeroDco).build();
+        when(spi.findByName(given.getName())).thenReturn(Option.of(heroDao));
+        val actual = service.create(given);
+        val error = new ApplicationError("Hero already exists", null, given, null);
+        assertThat(actual).containsOnLeft(error);
+    }
 
 }

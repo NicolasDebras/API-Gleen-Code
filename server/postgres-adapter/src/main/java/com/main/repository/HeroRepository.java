@@ -17,6 +17,8 @@ public interface HeroRepository extends JpaRepository<HeroEntity, UUID> {
 
     Optional<HeroEntity> findByRarity(RarityEntity rarity);
 
+    Optional<HeroEntity> findByName(String name);
+
 
 
 }

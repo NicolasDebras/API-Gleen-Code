@@ -14,4 +14,6 @@ public interface HeroPersistenceSpi extends PersistenceSpi<Hero, UUID>{
 
     Option<List<Hero>> findAll();
 
+    Option<Hero> findByName(String name);
+
 }

@@ -46,6 +46,7 @@ public class UserAccountDatabaseAdapter implements UserAccountPersistenceSpi {
 
 
     @Override
+    @Transactional
     public Either<ApplicationError, User> updateToken(User user) {
         val entity = fromDomain(user);
         val entityUpdated = UserEntity.builder()
@@ -57,5 +58,15 @@ public class UserAccountDatabaseAdapter implements UserAccountPersistenceSpi {
                 .toEither()
                 .mapLeft(throwable -> new ApplicationError("Unable to save user", null, entityUpdated, throwable))
                 .map(UserMapper::toDomain);
+    }
+
+    @Override
+    @Transactional
+    public Option<User> findByUsername(String username) {
+        val entityUser = repository.findByUsername(username);
+        if (entityUser.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(UserMapper.toDomain(entityUser.get()));
     }
 }

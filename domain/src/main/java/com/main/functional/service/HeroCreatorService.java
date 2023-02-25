@@ -31,6 +31,10 @@ public class HeroCreatorService implements HeroCreatorApi {
         if (!heroValidated.isValid()) {
             return Either.left(new ApplicationError("Not valid Hero", null, hero, null));
         }
+        val heroFound = spi.findByName(hero.getName());
+        if (heroFound.isDefined()) {
+            return Either.left(new ApplicationError("Hero already exists", null, hero, null));
+        }
         val rarity = findRarity(hero.getRarity().getName());
         if (rarity.isLeft()) {
             log.error("An error occurred while validating hero : {}", rarity.getLeft());

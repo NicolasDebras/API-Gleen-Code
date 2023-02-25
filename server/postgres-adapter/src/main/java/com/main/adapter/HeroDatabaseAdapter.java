@@ -24,8 +24,11 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
 
     @Override
     public Option<Hero> findByRarityDraw(UUID idRarity) {
-        return repository.findByRarity(RarityEntity.builder().id(idRarity).build())
-                .map(HeroMapper::toDomain);
+        val hero = repository.findByRarity(RarityEntity.builder().id(idRarity).build());
+        if (hero.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(HeroMapper.toDomain(hero.get()));
     }
 
     @Override

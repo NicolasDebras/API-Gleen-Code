@@ -36,7 +36,10 @@ public class SettingDeckDatabaseAdapter implements SettingDeckPersistenceSpi {
 
     @Override
     public Option<DeckSetting> findByName(String nameTypeDeck) {
-        return repository.findByName(nameTypeDeck)
-                .map(SettingDeckMapper::toDomain);
+        val deckSetting = repository.findByNameDeckType(nameTypeDeck);
+        if (deckSetting.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(SettingDeckMapper.toDomain(deckSetting.get()));
     }
 }

@@ -37,8 +37,11 @@ public class UserAccountDatabaseAdapter implements UserAccountPersistenceSpi {
     @Override
     @Transactional
     public Option<User> findById(UUID uuid) {
-        return repository.findUserEntityById(uuid)
-                .map(UserMapper::toDomain);
+        val entityUser = repository.findById(uuid);
+        if (entityUser.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(UserMapper.toDomain(entityUser.get()));
     }
 
 

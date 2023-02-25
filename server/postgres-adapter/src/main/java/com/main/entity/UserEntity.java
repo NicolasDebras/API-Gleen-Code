@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "user")
+@Table(name = "player")
 public class UserEntity {
     @Id @Include private UUID id;
 

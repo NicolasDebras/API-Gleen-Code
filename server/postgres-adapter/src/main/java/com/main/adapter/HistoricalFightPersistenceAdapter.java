@@ -1,6 +1,7 @@
 package com.main.adapter;
 
 import com.main.ApplicationError;
+import com.main.functional.model.Card;
 import com.main.functional.model.HistoricalFight;
 import com.main.ports.server.HistoricalFightPersistenceSpi;
 import io.vavr.control.Either;
@@ -21,7 +22,7 @@ public class HistoricalFightPersistenceAdapter implements HistoricalFightPersist
     private final HistoricalFightRepository repository;
     @Override
     public Either<ApplicationError, List<HistoricalFight>> findAllByIDCard(UUID idCard) {
-        return repository.findAllByIDCard(idCard)
+        return repository.findByWinner(Card.builder().id(idCard).build())
                 .map(HistoricalFightMapper::toDomainList)
                 .toEither(new ApplicationError("Error while finding all historical fights by id card", null, idCard, null));
     }

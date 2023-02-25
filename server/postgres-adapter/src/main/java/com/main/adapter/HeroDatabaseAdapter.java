@@ -1,6 +1,7 @@
 package com.main.adapter;
 
 import com.main.ApplicationError;
+import com.main.entity.RarityEntity;
 import com.main.functional.model.Hero;
 import com.main.ports.server.HeroPersistenceSpi;
 import io.vavr.control.Either;
@@ -23,7 +24,7 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
 
     @Override
     public Option<Hero> findByRarityDraw(UUID idRarity) {
-        return repository.findByRarityDraw(idRarity)
+        return repository.findByRarity(RarityEntity.builder().id(idRarity).build())
                 .map(HeroMapper::toDomain);
     }
 

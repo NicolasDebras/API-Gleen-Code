@@ -1,8 +1,10 @@
 package com.main.adapter;
 
 import com.main.ApplicationError;
-import com.main.mapper.CardEntityMapper;
+import com.main.entity.UserEntity;
 import com.main.functional.model.Deck;
+import com.main.functional.model.User;
+import com.main.mapper.CardEntityMapper;
 import com.main.ports.server.DeckPersistenceSpi;
 import com.main.repository.CardRepository;
 import io.vavr.control.Either;
@@ -26,11 +28,8 @@ public class DeckDatabaseAdapter implements DeckPersistenceSpi {
 
     @Override
     public Either<ApplicationError, Deck> find(UUID idUser) {
-        val deck = repository.findAllByUser(idUser);
-        if (deck.isEmpty()) {
-            return Either.left(new ApplicationError("Error while finding deck by id user", null, idUser, null));
-        }
-        return Either.right(CardEntityMapper.toDomainDeck(deck.get()));
+        val deck = repository.findAllByUser(UserEntity.builder().id(idUser).build());
+        return deck.<Either<ApplicationError, Deck>>map(cardEntities -> Either.right(CardEntityMapper.toDomainDeck(cardEntities))).orElseGet(() -> Either.left(new ApplicationError("Error while finding deck by id user", null, idUser, null)));
     }
 
     @Override
@@ -40,7 +39,7 @@ public class DeckDatabaseAdapter implements DeckPersistenceSpi {
 
     @Override
     public Option<Deck> findById(UUID uuid) {
-        val deck = repository.findAllByUser(uuid);
+        val deck = repository.findAllByUser(UserEntity.builder().id(uuid).build());
         if (deck.isEmpty()) {
             return Option.none();
         }

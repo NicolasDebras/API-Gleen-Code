@@ -24,7 +24,7 @@ public class CardDatabaseAdapter implements CardPersistenceSpi {
     private final LevelRepository levelRepository;
     @Override
     public Either<ApplicationError, Card> updateExperience(Card card) {
-        val cardEntity = cardRepository.findByCardId(card.getId());
+        val cardEntity = cardRepository.findCardEntityById(card.getId());
         if(cardEntity.isEmpty()){
             return Either.left(new ApplicationError("Card not found", null, card, null));
         }
@@ -44,7 +44,7 @@ public class CardDatabaseAdapter implements CardPersistenceSpi {
         if(level.isEmpty()){
             return Either.left(new ApplicationError("Level not found", null, card, null));
         }
-        return cardRepository.findByCardId(card.getId())
+        return cardRepository.findCardEntityById(card.getId())
                 .map(cardEntity -> {
                     cardEntity.setLevel(level.get());
                     return cardRepository.save(cardEntity);
@@ -61,7 +61,7 @@ public class CardDatabaseAdapter implements CardPersistenceSpi {
 
     @Override
     public Option<Card> findById(UUID uuid) {
-        return cardRepository.findByCardId(uuid)
+        return cardRepository.findCardEntityById(uuid)
                 .map(CardEntityMapper::toDomain);
     }
 }

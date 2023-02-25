@@ -1,6 +1,7 @@
 package com.main.repository;
 
 import com.main.entity.CardEntity;
+import com.main.entity.UserEntity;
 import io.vavr.control.Option;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,9 +18,9 @@ import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 public interface CardRepository extends JpaRepository<CardEntity, UUID> {
 
 
-    Optional<List<CardEntity>> findAllByUser(UUID idUser);
+    Optional<List<CardEntity>> findAllByUser(UserEntity user);
 
 
-    Option<CardEntity> findByCardId(UUID id);
+    Option<CardEntity> findCardEntityById(UUID id);
 
 }

@@ -16,10 +16,10 @@ public class DomainConfiguration {
         return new UserAccountDatabaseAdapter(userRepository);
     }
 
-    @Bean
-    public CardPersistenceSpi cardPersistenceSpi(CardRepository cardRepository) {
-        return new CardDatabaseAdapter(cardRepository);
-    }
+    //@Bean
+    //public CardPersistenceSpi cardPersistenceSpi(CardRepository cardRepository) {
+    //    return new CardDatabaseAdapter(cardRepository);
+    //}
 
     @Bean
     public HistoricalFightPersistenceSpi historicalFightPersistenceSpi(HistoricalFightRepository historicalFightRepository) {

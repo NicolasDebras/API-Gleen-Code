@@ -3,6 +3,8 @@ package mapper;
 import com.main.functional.model.Hero;
 import entity.HeroEntity;
 
+import java.util.List;
+
 public interface HeroMapper {
 
     static Hero toDomain(HeroEntity entity) {
@@ -22,5 +24,12 @@ public interface HeroMapper {
                 .speciality(SpecialityEntityMapper.fromDomain(domain.getSpeciality()))
                 .name(domain.getName())
                 .build();
+    }
+
+
+    static List<Hero> toDomainList(List<HeroEntity> entities) {
+        return entities.stream()
+                .map(HeroMapper::toDomain)
+                .toList();
     }
 }

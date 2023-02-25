@@ -1,6 +1,7 @@
-package config.domain;
+package config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import config.domain.DomainConfiguration;
 import io.vavr.jackson.datatype.VavrModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

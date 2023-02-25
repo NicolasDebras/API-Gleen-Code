@@ -1,9 +1,12 @@
 package mapper;
 
 import com.main.functional.model.Card;
+import com.main.functional.model.Deck;
 import com.main.functional.model.Hero;
 import com.main.functional.model.User;
 import entity.CardEntity;
+
+import java.util.List;
 
 
 public interface CardEntityMapper {
@@ -25,6 +28,14 @@ public interface CardEntityMapper {
                 .hero(HeroMapper.fromDomain(Hero.builder().id(domain.getHeroType().getId()).build()))
                 .level(LevelMapper.fromDomain(domain.getLevel()))
                 .experience(domain.getExperience())
+                .build();
+    }
+
+    static Deck toDomainDeck(List<CardEntity> entity) {
+        return Deck.builder()
+                .cards(entity.stream()
+                        .map(CardEntityMapper::toDomain)
+                        .toList())
                 .build();
     }
 }

@@ -3,6 +3,7 @@ package entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -25,5 +26,5 @@ public class HistoricalFightEntity {
     private CardEntity loser;
 
     @Column(name = "fight_date")
-    private String date;
+    private LocalDateTime date;
 }

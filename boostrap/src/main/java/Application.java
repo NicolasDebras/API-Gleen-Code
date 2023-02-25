@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication(scanBasePackages = "com")
-@EnableJpaRepositories("com")
-@EntityScan("com")
+@EnableJpaRepositories(basePackages = "repository")
+@EntityScan("entity")
 public class Application {
 
     public static void main(String[] args) {

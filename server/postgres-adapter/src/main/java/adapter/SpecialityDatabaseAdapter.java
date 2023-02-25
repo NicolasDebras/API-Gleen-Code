@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import repository.SpecialityRepository;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,9 @@ public class SpecialityDatabaseAdapter implements SpecialityPersistenceSpi {
     private final SpecialityRepository repository;
     @Override
     public Either<ApplicationError, Speciality> save(Speciality o) {
-        return null;
+        return repository.save(mapper.SpecialityEntityMapper.fromDomain(o))
+                .map(mapper.SpecialityEntityMapper::toDomain)
+                .toEither(new ApplicationError("Error while saving speciality", null, o, null));
     }
 
     @Override

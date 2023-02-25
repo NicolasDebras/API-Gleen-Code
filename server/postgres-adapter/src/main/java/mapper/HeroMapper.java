@@ -1,0 +1,26 @@
+package mapper;
+
+import com.main.functional.model.Hero;
+import entity.HeroEntity;
+
+public interface HeroMapper {
+
+    static Hero toDomain(HeroEntity entity) {
+        return Hero.builder()
+                .id(entity.getId())
+                .rarity(RarityEntityMapper.toDomain(entity.getRarity()))
+                .speciality(SpecialityEntityMapper.toDomain(entity.getSpeciality()))
+                .name(entity.getName())
+                .build();
+    }
+
+
+    static HeroEntity fromDomain(Hero domain) {
+        return HeroEntity.builder()
+                .id(domain.getId())
+                .rarity(RarityEntityMapper.fromDomain(domain.getRarity()))
+                .speciality(SpecialityEntityMapper.fromDomain(domain.getSpeciality()))
+                .name(domain.getName())
+                .build();
+    }
+}

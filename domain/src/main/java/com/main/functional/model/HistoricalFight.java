@@ -10,9 +10,13 @@ import java.util.UUID;
 @Builder
 @Value
 public class HistoricalFight {
-    UUID winner;
 
-    UUID loser;
+    @Builder.Default
+    UUID id = UUID.randomUUID();
+
+    Card winner;
+
+    Card loser;
 
     @Builder.Default
     LocalDateTime date = LocalDateTime.now();

@@ -72,14 +72,14 @@ public class FighterService implements FightCardApi {
         }
         if (defenseCardHealth > attackCardHealth) {
             log.info("The winner is the defense card");
-            val save = saveFight(attackCard.getId(), defenseCard.getId());
+            val save = saveFight(attackCard, defenseCard);
             if (save.isLeft()) {
                 return Option.none();
             }
             return Option.of(defenseCard.getId());
         }else if (attackCardHealth > defenseCardHealth) {
             log.info("The winner is the attack card");
-            val save= saveFight(defenseCard.getId(), attackCard.getId());
+            val save= saveFight(defenseCard, attackCard);
             if (save.isLeft()) {
                 return Option.none();
             }
@@ -99,7 +99,7 @@ public class FighterService implements FightCardApi {
             log.info("The cards are the same");
             return false;
         }
-        if (defenseCard.getIdUser() == attackCard.getIdUser()) {
+        if (defenseCard.getUser().getId() == attackCard.getUser().getId()) {
             log.info("The cards are from the same user");
             return false;
         }
@@ -110,7 +110,7 @@ public class FighterService implements FightCardApi {
         if (card.getExperience() < 4) {
             return cardPersistenceSpi.updateExperience(card);
         } else {
-            val updateUserToken = userAccountPersistenceSpi.updateToken(card.getIdUser());
+            val updateUserToken = userAccountPersistenceSpi.updateToken(card.getUser());
             if (updateUserToken.isLeft()) {
                 return Either.left(updateUserToken.getLeft());
             }
@@ -142,11 +142,11 @@ public class FighterService implements FightCardApi {
         return defenseBase + (defenseBase * percentageLevel) + (defenseBase * rarityPercentage);
     }
 
-    private Either<ApplicationError, HistoricalFight> saveFight(UUID idWinner, UUID idLoser) {
+    private Either<ApplicationError, HistoricalFight> saveFight(Card winner, Card loser) {
         return historicalFightPersistenceSpi.save(
                 HistoricalFight.builder()
-                        .winner(idWinner)
-                        .loser(idLoser)
+                        .winner(winner)
+                        .loser(loser)
                         .build()
                 )
                 .map(Either::<ApplicationError, HistoricalFight>right).getOrElse(Either.left(new ApplicationError("Not possible to save fight", null, null, null)));

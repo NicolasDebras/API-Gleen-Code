@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface UserAccountPersistenceSpi extends PersistenceSpi<User, UUID> {
 
-    Either<ApplicationError, User> updateToken(UUID idCard);
+    Either<ApplicationError, User> updateToken(User user);
 
 }

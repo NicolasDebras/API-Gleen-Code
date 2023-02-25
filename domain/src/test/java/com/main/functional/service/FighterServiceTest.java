@@ -70,7 +70,9 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder()
+                        .id(idUserDefense)
+                        .build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(0)
@@ -98,14 +100,18 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder()
+                        .id(idUserAttack)
+                        .build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
                 .build();
         val cardWinner = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder()
+                        .id(idUserDefense)
+                        .build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(1)
@@ -122,8 +128,8 @@ class FighterServiceTest {
         when(cardPersistenceSpi.findById(eq(idAttack))).thenReturn(Option.of(cardAttack));
         when(cardPersistenceSpi.updateExperience(any())).thenReturn(Either.right(cardWinner));
         when(historicalFightPersistenceSpi.save(any())).thenReturn(Either.right(HistoricalFight.builder()
-                .winner(cardWinner.getId())
-                .loser(cardAttack.getId())
+                .winner(cardWinner)
+                .loser(cardAttack)
                 .build()));
         val actual = fighterService.fightCard(fight);
         assertThat(actual).containsOnRight(cardWinner);
@@ -159,7 +165,10 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUser)
+                .user(User.builder()
+                        .id(idUser)
+                        .build()
+                )
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(0)
@@ -187,7 +196,9 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUser)
+                .user(User.builder()
+                        .id(idUser)
+                        .build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
@@ -237,7 +248,7 @@ class FighterServiceTest {
 
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUser)
+                .user(User.builder().id(idUser).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(0)
@@ -245,7 +256,7 @@ class FighterServiceTest {
         val idAttack = UUID.randomUUID();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUser)
+                .user(User.builder().id(idUser).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(0)
@@ -290,7 +301,7 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(0)
@@ -341,7 +352,7 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
@@ -387,14 +398,14 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(id)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroType)
                 .level(level)
                 .experience(0)
                 .build();
         val cardDefense = Card.builder()
                 .id(id)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroType)
                 .level(level)
                 .experience(0)
@@ -446,7 +457,7 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelAttack)
                 .experience(0)
@@ -474,14 +485,14 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelAttack)
                 .experience(0)
                 .build();
         val cardWinner = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelAttack)
                 .experience(1)
@@ -498,8 +509,8 @@ class FighterServiceTest {
         when(cardPersistenceSpi.findById(eq(idAttack))).thenReturn(Option.of(cardAttack));
         when(cardPersistenceSpi.updateExperience(any())).thenReturn(Either.right(cardWinner));
         when(historicalFightPersistenceSpi.save(any())).thenReturn(Either.right(HistoricalFight.builder()
-                .winner(cardWinner.getId())
-                .loser(cardAttack.getId())
+                .winner(cardWinner)
+                .loser(cardAttack)
                 .build()));
         val actual = fighterService.fightCard(fight);
         assertThat(actual).containsOnRight(cardWinner);
@@ -536,7 +547,7 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(0)
@@ -564,7 +575,7 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
@@ -615,7 +626,7 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelAttack)
                 .experience(0)
@@ -643,7 +654,7 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelAttack)
                 .experience(0)
@@ -694,7 +705,7 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(0)
@@ -722,7 +733,7 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
@@ -774,7 +785,7 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(4)
@@ -802,21 +813,21 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
                 .build();
         val cardWinner = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(1)
                 .build();
         val cardWinnerUpdate = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(Level.builder()
                         .level(2)
@@ -834,14 +845,14 @@ class FighterServiceTest {
                 .build();
         when(cardPersistenceSpi.findById(eq(idDefense))).thenReturn(Option.of(cardDefense));
         when(cardPersistenceSpi.findById(eq(idAttack))).thenReturn(Option.of(cardAttack));
-        when(userAccountPersistenceSpi.updateToken(idUserDefense)).thenReturn(Either.right(User.builder()
+        when(userAccountPersistenceSpi.updateToken(any())).thenReturn(Either.right(User.builder()
                 .id(idUserDefense)
                 .token(2)
                 .build()));
         when(cardPersistenceSpi.updateLevel(any())).thenReturn(Either.right(cardWinnerUpdate));
         when(historicalFightPersistenceSpi.save(any())).thenReturn(Either.right(HistoricalFight.builder()
-                .winner(cardWinner.getId())
-                .loser(cardAttack.getId())
+                .winner(cardWinner)
+                .loser(cardAttack)
                 .build()));
         val actual = fighterService.fightCard(fight);
         assertThat(actual).containsOnRight(cardWinnerUpdate);
@@ -878,7 +889,7 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(4)
@@ -906,14 +917,14 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
                 .build();
         val cardWinner = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(1)
@@ -928,14 +939,14 @@ class FighterServiceTest {
                 .build();
         when(cardPersistenceSpi.findById(eq(idDefense))).thenReturn(Option.of(cardDefense));
         when(cardPersistenceSpi.findById(eq(idAttack))).thenReturn(Option.of(cardAttack));
-        when(userAccountPersistenceSpi.updateToken(idUserDefense)).thenReturn(Either.right(User.builder()
-                .id(idUserDefense)
-                .token(2)
-                .build()));
         when(cardPersistenceSpi.updateLevel(any())).thenReturn(Either.left(new ApplicationError("Error save Update Level", null, null, null)));
         when(historicalFightPersistenceSpi.save(any())).thenReturn(Either.right(HistoricalFight.builder()
-                .winner(cardWinner.getId())
-                .loser(cardAttack.getId())
+                .winner(cardWinner)
+                .loser(cardAttack)
+                .build()));
+        when( userAccountPersistenceSpi.updateToken(any())).thenReturn(Either.right(User.builder()
+                .id(idUserDefense)
+                .token(0)
                 .build()));
         val actual = fighterService.fightCard(fight);
         assertThat(actual).containsOnLeft(new ApplicationError("Error save Update Level", null, null, null));
@@ -972,7 +983,7 @@ class FighterServiceTest {
                 .build();
         val cardDefense = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(4)
@@ -1000,14 +1011,14 @@ class FighterServiceTest {
                 .build();
         val cardAttack = Card.builder()
                 .id(idAttack)
-                .idUser(idUserAttack)
+                .user(User.builder().id(idUserAttack).build())
                 .heroType(heroTypeAttack)
                 .level(levelDefense)
                 .experience(0)
                 .build();
         val cardWinner = Card.builder()
                 .id(idDefense)
-                .idUser(idUserDefense)
+                .user(User.builder().id(idUserDefense).build())
                 .heroType(heroTypeDefense)
                 .level(levelDefense)
                 .experience(1)
@@ -1022,11 +1033,10 @@ class FighterServiceTest {
                 .build();
         when(cardPersistenceSpi.findById(eq(idDefense))).thenReturn(Option.of(cardDefense));
         when(cardPersistenceSpi.findById(eq(idAttack))).thenReturn(Option.of(cardAttack));
-        when(userAccountPersistenceSpi.updateToken(idUserDefense)).thenReturn(Either.left(new ApplicationError("Error save Update Token", null, null, null)));
-        //when(cardPersistenceSpi.updateLevel(any())).thenReturn(Either.left(new ApplicationError("Error save Update Level", null, null, null)));
+        when(userAccountPersistenceSpi.updateToken(User.builder().id(idUserDefense).build())).thenReturn(Either.left(new ApplicationError("Error save Update Token", null, null, null)));
         when(historicalFightPersistenceSpi.save(any())).thenReturn(Either.right(HistoricalFight.builder()
-                .winner(cardWinner.getId())
-                .loser(cardAttack.getId())
+                .winner(cardWinner)
+                .loser(cardAttack)
                 .build()));
         val actual = fighterService.fightCard(fight);
         assertThat(actual).containsOnLeft(new ApplicationError("Error save Update Token", null, null, null));

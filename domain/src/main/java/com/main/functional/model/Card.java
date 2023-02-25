@@ -15,7 +15,7 @@ public class Card  {
     Hero heroType;
     Level level;
 
-    UUID idUser;
+    User user;
 
     int experience;
 }

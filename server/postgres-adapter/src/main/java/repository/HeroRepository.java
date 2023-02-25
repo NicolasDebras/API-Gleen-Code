@@ -18,8 +18,6 @@ public interface HeroRepository extends JpaRepository<HeroEntity, UUID> {
 
     Option<HeroEntity> findByRarityDraw(UUID idRarity);
 
-    Option<List<HeroEntity>> findAll();
 
-    Option<HeroEntity> findById(UUID uuid);
 
 }

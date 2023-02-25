@@ -6,6 +6,7 @@ import com.main.ports.server.HistoricalFightPersistenceSpi;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import mapper.HistoricalFightMapper;
 import org.springframework.stereotype.Service;
 import repository.HistoricalFightRepository;
@@ -27,14 +28,16 @@ public class HistoricalFightPersistenceAdapter implements HistoricalFightPersist
 
     @Override
     public Either<ApplicationError, HistoricalFight> save(HistoricalFight o) {
-        return repository.save(HistoricalFightMapper.fromDomain(o))
-                .map(mapper.HistoricalFightMapper::toDomain)
-                .toEither(new ApplicationError("Error while saving historical fight", null, o, null));
+        val historicalFight = repository.save(HistoricalFightMapper.fromDomain(o));
+        return Either.right(HistoricalFightMapper.toDomain(historicalFight));
     }
 
     @Override
     public Option<HistoricalFight> findById(UUID uuid) {
-        return repository.findById(uuid)
-                .map(HistoricalFightMapper::toDomain);
+        val historicalFight = repository.findById(uuid);
+        if (historicalFight.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(HistoricalFightMapper.toDomain(historicalFight.get()));
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@SpringBootApplication(scanBasePackages = "com")
+@SpringBootApplication(scanBasePackages = {"com.main", "repository", "entity"} )
 @EnableJpaRepositories(basePackages = "repository")
 @EntityScan("entity")
 public class Application {

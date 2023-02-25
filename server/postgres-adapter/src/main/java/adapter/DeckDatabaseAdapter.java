@@ -7,6 +7,7 @@ import com.main.ports.server.DeckPersistenceSpi;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import mapper.CardEntityMapper;
 import org.springframework.stereotype.Service;
 import repository.CardRepository;
@@ -26,9 +27,11 @@ public class DeckDatabaseAdapter implements DeckPersistenceSpi {
 
     @Override
     public Either<ApplicationError, Deck> find(UUID idUser) {
-        return repository.findAllByUser(idUser)
-                .map(CardEntityMapper::toDomainDeck)
-                .toEither(new ApplicationError("Error while finding deck by id user", null, idUser, null));
+        val deck = repository.findAllByUser(idUser);
+        if (deck.isEmpty()) {
+            return Either.left(new ApplicationError("Error while finding deck by id user", null, idUser, null));
+        }
+        return Either.right(CardEntityMapper.toDomainDeck(deck.get()));
     }
 
     @Override
@@ -38,7 +41,10 @@ public class DeckDatabaseAdapter implements DeckPersistenceSpi {
 
     @Override
     public Option<Deck> findById(UUID uuid) {
-        return repository.findById(uuid)
-                .map(CardEntityMapper::toDomain);
+        val deck = repository.findAllByUser(uuid);
+        if (deck.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(CardEntityMapper.toDomainDeck(deck.get()));
     }
 }

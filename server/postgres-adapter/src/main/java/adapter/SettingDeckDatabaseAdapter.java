@@ -6,6 +6,7 @@ import com.main.ports.server.SettingDeckPersistenceSpi;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import mapper.SettingDeckMapper;
 import org.springframework.stereotype.Service;
 import repository.SettingDeckRepository;
@@ -26,8 +27,11 @@ public class SettingDeckDatabaseAdapter implements SettingDeckPersistenceSpi {
 
     @Override
     public Option<DeckSetting> findById(UUID uuid) {
-        return repository.findById(uuid)
-                .map(SettingDeckMapper::toDomain);
+        val deckSetting = repository.findById(uuid);
+        if (deckSetting.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(SettingDeckMapper.toDomain(deckSetting.get()));
     }
 
     @Override

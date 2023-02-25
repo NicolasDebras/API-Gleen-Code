@@ -6,6 +6,7 @@ import com.main.ports.server.HeroPersistenceSpi;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import mapper.HeroMapper;
 import org.springframework.stereotype.Service;
 import repository.HeroRepository;
@@ -28,20 +29,25 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
 
     @Override
     public Option<List<Hero>> findAll() {
-        return repository.findAll()
-                .map(HeroMapper::toDomainList);
+        val heroes = repository.findAll();
+        if (heroes.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(HeroMapper.toDomainList(heroes));
     }
 
     @Override
     public Either<ApplicationError, Hero> save(Hero o) {
-        return repository.save(HeroMapper.fromDomain(o))
-                .map(HeroMapper::toDomain)
-                .toEither(new ApplicationError("Error while saving hero", null, o, null));
+        val hero = repository.save(HeroMapper.fromDomain(o));
+        return Either.right(HeroMapper.toDomain(hero));
     }
 
     @Override
     public Option<Hero> findById(UUID uuid) {
-        return repository.findById(uuid)
-                .map(HeroMapper::toDomain);
+        val hero = repository.findById(uuid);
+        if (hero.isEmpty()) {
+            return Option.none();
+        }
+        return Option.of(HeroMapper.toDomain(hero.get()));
     }
 }

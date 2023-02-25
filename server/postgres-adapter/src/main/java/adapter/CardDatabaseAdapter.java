@@ -3,6 +3,7 @@ package adapter;
 import com.main.ApplicationError;
 import com.main.functional.model.Card;
 import com.main.ports.server.CardPersistenceSpi;
+import entity.CardEntity;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,18 @@ public class CardDatabaseAdapter implements CardPersistenceSpi {
     private final LevelRepository levelRepository;
     @Override
     public Either<ApplicationError, Card> updateExperience(Card card) {
-        return cardRepository.findById(card.getId())
-                .map(cardEntity -> {
-                    cardEntity.setExperience(card.getExperience()+1);
-                    return cardRepository.save(cardEntity);
-                })
-                .map(CardEntityMapper::toDomain)
-                .toEither(new ApplicationError("Card not found", null, card, null));
+        val cardEntity = cardRepository.findByCardId(card.getId());
+        if(cardEntity.isEmpty()){
+            return Either.left(new ApplicationError("Card not found", null, card, null));
+        }
+        val cardUpdated = CardEntity.builder()
+                .id(cardEntity.get().getId())
+                .level(cardEntity.get().getLevel())
+                .hero(cardEntity.get().getHero())
+                .user(cardEntity.get().getUser())
+                .experience(cardEntity.get().getExperience() + 1)
+                .build();
+        return Either.right(CardEntityMapper.toDomain(cardRepository.save(cardUpdated)));
     }
 
     @Override
@@ -49,9 +55,8 @@ public class CardDatabaseAdapter implements CardPersistenceSpi {
 
     @Override
     public Either<ApplicationError, Card> save(Card o) {
-        return cardRepository.save(CardEntityMapper.fromDomain(o))
-                .map(CardEntityMapper::toDomain)
-                .toEither(new ApplicationError("Card not saved", null, o, null));
+        val card = cardRepository.save(CardEntityMapper.fromDomain(o));
+        return Either.right(CardEntityMapper.toDomain(card));
     }
 
     @Override

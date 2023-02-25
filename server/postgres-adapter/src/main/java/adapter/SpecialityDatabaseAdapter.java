@@ -6,6 +6,7 @@ import com.main.ports.server.SpecialityPersistenceSpi;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import repository.SpecialityRepository;
 
@@ -19,9 +20,8 @@ public class SpecialityDatabaseAdapter implements SpecialityPersistenceSpi {
     private final SpecialityRepository repository;
     @Override
     public Either<ApplicationError, Speciality> save(Speciality o) {
-        return repository.save(mapper.SpecialityEntityMapper.fromDomain(o))
-                .map(mapper.SpecialityEntityMapper::toDomain)
-                .toEither(new ApplicationError("Error while saving speciality", null, o, null));
+        val speciality = repository.save(mapper.SpecialityEntityMapper.fromDomain(o));
+        return Either.right(mapper.SpecialityEntityMapper.toDomain(speciality));
     }
 
     @Override

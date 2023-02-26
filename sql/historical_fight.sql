@@ -1,0 +1,1 @@
+INSERT INTO public.historical_fight (id, fight_date, loser_id, winner_id) VALUES ('3f9aaf36-0fe9-4b50-96e7-668dc30b05f6', '2023-02-26 19:08:57.315618', '4ae6be38-2ac0-4530-9578-dae0aa928c45', '60cdcfa2-6826-4151-8e79-2c470f0a0cbe');

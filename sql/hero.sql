@@ -1,0 +1,9 @@
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('512a7184-cc16-43d3-bc89-51f170db0f70', 'Tank_Legendary', '05c42955-28e6-4724-9741-3bbd5bb74e5e', '67cf7dce-39b8-4459-90f5-c50d65c2a1cb');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('460f36c4-4152-43c6-ba8a-7df9c82d8efe', 'Tank_Rare', '696b263c-e36d-4da6-bbfc-53fcd5ab2945', '67cf7dce-39b8-4459-90f5-c50d65c2a1cb');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('493a9f19-7930-408a-b5d9-901688cc3561', 'Tank_Common', '554682e0-6050-4746-ac5c-9ac057003dd7', '67cf7dce-39b8-4459-90f5-c50d65c2a1cb');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('40dadca3-35da-4b9e-8b15-0c3e9437e357', 'Wizard_Common', '554682e0-6050-4746-ac5c-9ac057003dd7', 'e8336961-5d65-4046-9d68-3ccb56b9b37c');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('49e63fa4-bba6-4fa8-9d37-f40861188802', 'Wizard_Rare', '696b263c-e36d-4da6-bbfc-53fcd5ab2945', 'e8336961-5d65-4046-9d68-3ccb56b9b37c');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('f17260de-ffbc-429c-92d7-6c41a345331e', 'WizardL', '05c42955-28e6-4724-9741-3bbd5bb74e5e', 'e8336961-5d65-4046-9d68-3ccb56b9b37c');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('19d089fa-9302-41be-92a5-4e1136214c64', 'MurdererL', '05c42955-28e6-4724-9741-3bbd5bb74e5e', 'cddd01bc-8cf9-4ad8-903c-8622a75ac2f3');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('bbe01a83-e627-47a5-8650-f422286b6665', 'MurdererC', '554682e0-6050-4746-ac5c-9ac057003dd7', 'cddd01bc-8cf9-4ad8-903c-8622a75ac2f3');
+INSERT INTO public.hero (id, name, rarity_id, speciality_id) VALUES ('46789c7c-f9f5-4405-9745-862e181e89bf', 'MurdererR', '696b263c-e36d-4da6-bbfc-53fcd5ab2945', 'cddd01bc-8cf9-4ad8-903c-8622a75ac2f3');

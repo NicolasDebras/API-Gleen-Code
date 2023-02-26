@@ -119,6 +119,10 @@ public class FighterService implements FightCardApi {
                 return Either.left(updateUserToken.getLeft());
             }
             if(card.getLevel().getLevel() < MAX_LEVEL) {
+                val restExperience = cardPersistenceSpi.resetExperience(card);
+                if (restExperience.isLeft()) {
+                    return Either.left(restExperience.getLeft());
+                }
                 return cardPersistenceSpi.updateLevel(card);
             }
             return Either.right(card);

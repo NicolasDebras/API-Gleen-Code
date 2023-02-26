@@ -12,4 +12,6 @@ public interface CardPersistenceSpi extends PersistenceSpi<Card, UUID> {
 
     Either<ApplicationError, Card> updateLevel(Card card);
 
+    Either<ApplicationError, Card> resetExperience(Card card);
+
 }

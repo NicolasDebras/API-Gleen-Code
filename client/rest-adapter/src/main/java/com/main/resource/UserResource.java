@@ -1,5 +1,6 @@
 package com.main.resource;
 
+import com.main.mapper.UserMapper;
 import com.main.ports.client.DeckOpenApi;
 import com.main.ports.client.FindDeckUserApi;
 import com.main.ports.client.UserAccountCreatorApi;
@@ -7,7 +8,7 @@ import com.main.dto.OpenPackDto;
 import com.main.dto.UserCreationDto;
 import lombok.RequiredArgsConstructor;
 import com.main.mapper.PackMapper;
-import com.main.mapper.UserMapper;
+import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,9 @@ public class UserResource {
 
     @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody UserCreationDto userCreationDto) {
+        val user = UserMapper.toDomain(userCreationDto);
         return userAccountCreatorApi
-                .create(UserMapper.toDomain(userCreationDto))
+                .create(user)
                 .map(UserMapper::toDto)
                 .fold(ResponseEntity.badRequest()::body, ResponseEntity::ok);
     }

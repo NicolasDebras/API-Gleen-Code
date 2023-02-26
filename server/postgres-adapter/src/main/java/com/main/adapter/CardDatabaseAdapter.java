@@ -66,6 +66,22 @@ public class CardDatabaseAdapter implements CardPersistenceSpi {
     }
 
     @Override
+    public Either<ApplicationError, Card> resetExperience(Card card) {
+        val cardEntity = cardRepository.findCardEntityById(card.getId());
+        if(cardEntity.isEmpty()){
+            return Either.left(new ApplicationError("Card not found", null, card, null));
+        }
+        val cardUpdated = CardEntity.builder()
+                .id(cardEntity.get().getId())
+                .level(cardEntity.get().getLevel())
+                .hero(cardEntity.get().getHero())
+                .user(cardEntity.get().getUser())
+                .experience(0)
+                .build();
+        return Either.right(CardEntityMapper.toDomain(cardRepository.save(cardUpdated)));
+    }
+
+    @Override
     @Transactional
     public Either<ApplicationError, Card> save(Card o) {
         return Try(() -> cardRepository.save(CardEntityMapper.fromDomain(o)))

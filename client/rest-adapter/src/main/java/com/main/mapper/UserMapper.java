@@ -1,7 +1,7 @@
 package com.main.mapper;
 
-import com.main.functional.model.User;
 import com.main.dto.UserCreationDto;
+import com.main.functional.model.User;
 import com.main.dto.UserDto;
 
 public interface UserMapper {

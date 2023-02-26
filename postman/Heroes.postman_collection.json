@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "2aaecd4a-67cd-4d36-91c1-9cc023b305b3",
+		"name": "Heroes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23296354"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/e5b47bed-52ba-4459-b919-1442dac20cd9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"e5b47bed-52ba-4459-b919-1442dac20cd9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Hero",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"MurdererR\",\n    \"speciality\": \"Murderer\",\n    \"rarity\": \"Rare\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/hero",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"hero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Hero",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/hero",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"hero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fight",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"defender\": \"4ae6be38-2ac0-4530-9578-dae0aa928c45\",\n    \"attacker\": \"60cdcfa2-6826-4151-8e79-2c470f0a0cbe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/fight",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fight"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Fight",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/fight/4ae6be38-2ac0-4530-9578-dae0aa928c45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fight",
+						"4ae6be38-2ac0-4530-9578-dae0aa928c45"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Open Pack",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": \"e5b47bed-52ba-4459-b919-1442dac20cd9\",\n    \"pack\":\"Diamond\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/open-pack",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"open-pack"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

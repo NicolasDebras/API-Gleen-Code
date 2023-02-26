@@ -1,5 +1,6 @@
 package com.main.repository;
 
+import com.main.entity.CardEntity;
 import com.main.entity.HistoricalFightEntity;
 import com.main.functional.model.Card;
 import io.vavr.control.Option;
@@ -16,5 +17,7 @@ import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 @Transactional(propagation = MANDATORY)
 public interface HistoricalFightRepository extends JpaRepository<HistoricalFightEntity, UUID> {
 
-    Option<List<HistoricalFightEntity>>  findByWinner(Card card);
+    Option<List<HistoricalFightEntity>>  findByWinner(CardEntity card);
+
+    Option<List<HistoricalFightEntity>>  findByLoser(CardEntity card);
 }

@@ -7,6 +7,7 @@ public interface AdvantageOtherHeroMapper {
 
     static AdvantageOtherHero toDomain(AdvantageOtherHeroEntity entity) {
         return AdvantageOtherHero.builder()
+                .id(entity.getId())
                 .name(entity.getName())
                 .power(entity.getPower())
                 .build();
@@ -14,6 +15,7 @@ public interface AdvantageOtherHeroMapper {
 
     static AdvantageOtherHeroEntity fromDomain(AdvantageOtherHero domain) {
         return AdvantageOtherHeroEntity.builder()
+                .id(domain.getId())
                 .name(domain.getName())
                 .power(domain.getPower())
                 .build();

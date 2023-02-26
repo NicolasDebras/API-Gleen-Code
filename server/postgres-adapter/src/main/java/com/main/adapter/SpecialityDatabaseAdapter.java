@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 import com.main.repository.SpecialityRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -17,10 +18,11 @@ import com.main.repository.SpecialityRepository;
 public class SpecialityDatabaseAdapter implements SpecialityPersistenceSpi {
 
     private final SpecialityRepository repository;
+
     @Override
+    @Transactional
     public Either<ApplicationError, Speciality> save(Speciality o) {
-        val speciality = repository.save(SpecialityEntityMapper.fromDomain(o));
-        return Either.right(SpecialityEntityMapper.toDomain(speciality));
+        return null;
     }
 
     @Override
@@ -29,6 +31,7 @@ public class SpecialityDatabaseAdapter implements SpecialityPersistenceSpi {
     }
 
     @Override
+    @Transactional
     public Option<Speciality> findByName(String name) {
         return repository.findByName(name)
                 .map(SpecialityEntityMapper::toDomain);

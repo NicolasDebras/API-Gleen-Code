@@ -20,9 +20,9 @@ public class HistoricalFightEntity {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     private CardEntity winner;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     private CardEntity loser;
 
     @Column(name = "fight_date")

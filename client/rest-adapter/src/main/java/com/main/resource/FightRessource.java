@@ -6,7 +6,7 @@ import com.main.dto.FightDto;
 import lombok.RequiredArgsConstructor;
 import com.main.dto.mapper.CardMapper;
 import com.main.dto.mapper.FightMapper;
-import com.main.dto.mapper.HistoricalListFighterMapper;
+import com.main.mapper.HistoricalListFighterMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -60,12 +60,13 @@ public class FighterService implements FightCardApi {
     private Option<UUID> fight(Card defenseCard, Card attackCard) {
         double defenseCardHealth = calculateHealth(defenseCard);
         val defenseCardAttack = calculateAttack(defenseCard, attackCard.getHeroType().getName());
-        val attackCardAttack = calculateAttack(attackCard, defenseCard.getHeroType().getName());
+        val attackCardAttack = calculateArmor(attackCard);
         val defenseCardArmor = calculateArmor(defenseCard);
         double attackCardHealth = calculateHealth(attackCard);
         val attackCardArmor = calculateArmor(attackCard);
+        val attackCardDefense = calculateAttack(attackCard, defenseCard.getHeroType().getName());
         val damageDefenseCard = calculateDamage(attackCardAttack, defenseCardArmor);
-        val damageAttackCard = calculateDamage(defenseCardAttack, attackCardArmor);
+        val damageAttackCard = calculateDamage(attackCardDefense,  attackCardArmor);
         while (defenseCardHealth > 0 && attackCardHealth > 0) {
             defenseCardHealth = defenseCardHealth - damageDefenseCard;
             attackCardHealth = attackCardHealth - damageAttackCard;

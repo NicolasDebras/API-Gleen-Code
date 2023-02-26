@@ -1,11 +1,13 @@
 package com.main.dto;
 
-import com.main.functional.model.Card;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+
+@JsonAutoDetect(fieldVisibility = ANY)
 public record HistoricalListFighterDto(
-        Card cardWinner,
 
         List<HistorialFightDto> fights
 )

@@ -10,6 +10,7 @@ import lombok.val;
 import com.main.mapper.SettingDeckMapper;
 import org.springframework.stereotype.Service;
 import com.main.repository.SettingDeckRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -21,11 +22,13 @@ public class SettingDeckDatabaseAdapter implements SettingDeckPersistenceSpi {
 
 
     @Override
+    @Transactional
     public Either<ApplicationError, DeckSetting> save(DeckSetting o) {
         return null;
     }
 
     @Override
+    @Transactional
     public Option<DeckSetting> findById(UUID uuid) {
         val deckSetting = repository.findById(uuid);
         if (deckSetting.isEmpty()) {
@@ -35,6 +38,7 @@ public class SettingDeckDatabaseAdapter implements SettingDeckPersistenceSpi {
     }
 
     @Override
+    @Transactional
     public Option<DeckSetting> findByName(String nameTypeDeck) {
         val deckSetting = repository.findByNameDeckType(nameTypeDeck);
         if (deckSetting.isEmpty()) {

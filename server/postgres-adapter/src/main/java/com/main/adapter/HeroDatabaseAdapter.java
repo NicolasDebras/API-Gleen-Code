@@ -12,7 +12,7 @@ import com.main.mapper.HeroMapper;
 import org.springframework.stereotype.Service;
 import com.main.repository.HeroRepository;
 import org.springframework.transaction.annotation.Transactional;
-
+import static io.vavr.API.Try;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,8 +56,10 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
     @Override
     @Transactional
     public Either<ApplicationError, Hero> save(Hero o) {
-        val hero = repository.save(HeroMapper.fromDomain(o));
-        return Either.right(HeroMapper.toDomain(hero));
+        return Try(() -> repository.save(HeroMapper.fromDomain(o)))
+                .toEither()
+                .mapLeft(throwable -> new ApplicationError("Unable to save hero", null, o, throwable))
+                .map(HeroMapper::toDomain);
     }
 
     @Override

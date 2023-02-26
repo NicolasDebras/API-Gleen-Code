@@ -25,8 +25,7 @@ public class FindDeckByUserService implements FindDeckUserApi {
         return DeckListUserValidation.validate(idUser)
                 .toEither(() -> new ApplicationError("Invalid idUser", null, idUser, null))
                 .flatMap(this::findUser)
-                .flatMap(user -> deckPersistenceSpi.find(idUser)
-                        .toEither(() -> new ApplicationError("Not possible to find deck", null, idUser, null)));
+                .flatMap(user -> deckPersistenceSpi.find(idUser));
     }
 
     private Either<ApplicationError, User> findUser(UUID idUser) {

@@ -292,7 +292,7 @@ class FighterServiceTest {
                 .build();
         val rarityDefense = Rarity.builder()
                 .name("Common")
-                .percentage(0.00)
+                .percentage(0.0)
                 .build();
         val heroTypeDefense = Hero.builder()
                 .name("Hero")

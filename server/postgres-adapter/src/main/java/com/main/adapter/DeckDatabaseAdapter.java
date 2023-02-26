@@ -12,6 +12,7 @@ import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -27,9 +28,13 @@ public class DeckDatabaseAdapter implements DeckPersistenceSpi {
     }
 
     @Override
+    @Transactional
     public Either<ApplicationError, Deck> find(UUID idUser) {
         val deck = repository.findAllByUser(UserEntity.builder().id(idUser).build());
-        return deck.<Either<ApplicationError, Deck>>map(cardEntities -> Either.right(CardEntityMapper.toDomainDeck(cardEntities))).orElseGet(() -> Either.left(new ApplicationError("Error while finding deck by id user", null, idUser, null)));
+        if (deck.isEmpty() || deck.get().isEmpty()) {
+            return Either.left(new ApplicationError("Not card is in deck", null, idUser, null));
+        }
+        return  Either.right(CardEntityMapper.toDomainDeck(deck.get()));
     }
 
     @Override
@@ -38,6 +43,7 @@ public class DeckDatabaseAdapter implements DeckPersistenceSpi {
     }
 
     @Override
+    @Transactional
     public Option<Deck> findById(UUID uuid) {
         val deck = repository.findAllByUser(UserEntity.builder().id(uuid).build());
         if (deck.isEmpty()) {

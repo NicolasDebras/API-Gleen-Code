@@ -70,7 +70,7 @@ class HeroCreatorServiceTest {
                 .speciality(specialityDao)
                 .rarity(rarityDao)
                 .build();
-        when(spi.save(given)).thenReturn(Right(given));
+        when(spi.save(any())).thenReturn(Right(given));
         when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.of(rarityDao));
         when(spiSpeciality.findByName(specialityHeroDco.getName())).thenReturn(Option.of(specialityDao));
         when(spi.findByName(given.getName())).thenReturn(Option.none());
@@ -153,7 +153,7 @@ class HeroCreatorServiceTest {
                 .advantageOtherHeroes(List.of(advantageOtherHeroDao))
                 .build();
         val error = new ApplicationError("An error occurred", null, null, null);
-        when(spi.save(given)).thenReturn(Left(error));
+        when(spi.save(any())).thenReturn(Left(error));
         when(spi.findByName(given.getName())).thenReturn(Option.none());
         when(spiRarity.findByName(rarityHeroDco.getName())).thenReturn(Option.of(rarityDao));
         when(spiSpeciality.findByName(specialityHeroDco.getName())).thenReturn(Option.of(specialityDao));

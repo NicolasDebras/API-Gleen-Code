@@ -9,6 +9,7 @@ import io.vavr.control.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.main.repository.LevelRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class LevelDatabaseAdapter implements LevelPersistenceSpi {
     private final LevelRepository repository;
 
     @Override
+    @Transactional
     public Option<Level> findByLevel(int level) {
         return repository.findByLevel(level)
                 .map(LevelMapper::toDomain);

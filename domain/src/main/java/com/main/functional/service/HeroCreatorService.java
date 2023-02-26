@@ -45,7 +45,13 @@ public class HeroCreatorService implements HeroCreatorApi {
             log.error("An error occurred while validating hero : {}", speciality.getLeft());
             return Either.left(speciality.getLeft());
         }
-        val heroSaved = spi.save(hero);
+        val heroToSave = Hero.builder()
+                .id(hero.getId())
+                .name(hero.getName())
+                .speciality(speciality.get())
+                .rarity(rarity.get())
+                .build();
+        val heroSaved = spi.save(heroToSave);
         if (heroSaved.isLeft()) {
             log.error("An error occurred while validating hero : {}", heroSaved.getLeft());
             return Either.left(heroSaved.getLeft());

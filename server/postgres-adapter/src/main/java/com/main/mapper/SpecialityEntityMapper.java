@@ -12,6 +12,7 @@ public interface SpecialityEntityMapper {
 
     static Speciality toDomain(SpecialityEntity entity) {
         return Speciality.builder()
+                .id(entity.getId())
                 .name(entity.getName())
                 .armor(entity.getArmor())
                 .power(entity.getPower())
@@ -22,10 +23,11 @@ public interface SpecialityEntityMapper {
 
     static SpecialityEntity fromDomain(Speciality domain) {
         return SpecialityEntity.builder()
-                .id(UUID.randomUUID())
+                .id(domain.getId())
                 .name(domain.getName())
                 .armor(domain.getArmor())
                 .power(domain.getPower())
+                .health(domain.getHealth())
                 .advantageOtherHero(List.of(domain.getAdvantageOtherHeroes().stream().map(AdvantageOtherHeroMapper::fromDomain).toArray(AdvantageOtherHeroEntity[]::new)))
                 .build();
     }

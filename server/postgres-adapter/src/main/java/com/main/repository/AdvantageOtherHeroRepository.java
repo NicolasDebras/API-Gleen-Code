@@ -12,4 +12,6 @@ import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 @Repository
 @Transactional(propagation = MANDATORY)
 public interface AdvantageOtherHeroRepository extends JpaRepository<AdvantageOtherHeroEntity, UUID>{
+
+
 }

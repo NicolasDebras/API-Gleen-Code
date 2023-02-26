@@ -1,4 +1,4 @@
-package com.main.dto.mapper;
+package com.main.mapper;
 
 import com.main.functional.model.HistoricalFight;
 import com.main.dto.HistoricalListFighterDto;
@@ -9,7 +9,6 @@ public interface HistoricalListFighterMapper {
 
     static HistoricalListFighterDto toDto(List<HistoricalFight> historicalFights) {
         return new HistoricalListFighterDto(
-                historicalFights.get(0).getWinner(),
                 historicalFights.stream()
                         .map(HistorialFightMapper::toDto)
                         .toList()

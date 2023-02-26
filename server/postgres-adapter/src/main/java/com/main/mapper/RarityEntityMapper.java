@@ -7,6 +7,7 @@ public interface RarityEntityMapper{
 
     static Rarity toDomain(RarityEntity entity) {
         return Rarity.builder()
+                .id(entity.getId())
                 .percentage(entity.getPercentage())
                 .name(entity.getName())
                 .build();
@@ -14,6 +15,7 @@ public interface RarityEntityMapper{
 
     static RarityEntity fromDomain(Rarity domain) {
         return RarityEntity.builder()
+                .id(domain.getId())
                 .percentage(domain.getPercentage())
                 .name(domain.getName())
                 .build();

@@ -4,6 +4,7 @@ import com.main.functional.model.Card;
 import com.main.functional.model.Deck;
 import com.main.functional.model.Hero;
 import com.main.entity.CardEntity;
+import lombok.val;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface CardEntityMapper {
         return CardEntity.builder()
                 .id(domain.getId())
                 .user(UserMapper.fromDomain(domain.getUser()))
-                .hero(HeroMapper.fromDomain(Hero.builder().id(domain.getHeroType().getId()).build()))
+                .hero(HeroMapper.fromDomain(domain.getHeroType()))
                 .level(LevelMapper.fromDomain(domain.getLevel()))
                 .experience(domain.getExperience())
                 .build();

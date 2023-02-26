@@ -8,6 +8,8 @@ import java.util.UUID;
 public record HistorialFightDto(
 
         UUID idFight,
+
+        Card cardWinner,
         Card cardLoser,
 
         LocalDateTime dateFight

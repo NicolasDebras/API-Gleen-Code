@@ -14,5 +14,9 @@ Se référer au controller pour tester dans Postman
 Tout marche en test
 Sauf le tirage de carte qui ne marche pas encore
 Il sort toujours une mauvaise erreur comme quoi il ne trouve pas la rareté souhaitée
+La ligne 32 de la class DrawHeroService.java ne marche pas et je ne sais pas pourquoi
+Si vous avez une idée je suis preneur, car ça m'intéresse
+
 
 Fumo Aristide - 4A - 2023
+aristide.ff@gmail.com

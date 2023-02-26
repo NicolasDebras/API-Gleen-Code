@@ -10,6 +10,9 @@ public interface SettingDeckMapper {
                 .nameDeckType(entity.getNameDeckType())
                 .token(entity.getToken())
                 .numberCard(entity.getNumberCard())
+                .rarityDeckSettings(entity.getRarityDeckSettings().stream()
+                        .map(RarityDeckSettingMapper::toDomain)
+                        .toList())
                 .build();
     }
 }

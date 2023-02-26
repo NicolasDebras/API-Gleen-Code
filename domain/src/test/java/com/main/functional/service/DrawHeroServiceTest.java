@@ -202,7 +202,34 @@ class DrawHeroServiceTest {
         val actual = drawHeroService.drawDeck(seed, deckSetting, percentageLuckyTotal);
         val error = new ApplicationError("Not possible to find level", null, 1, null);
         assertThat(actual).containsOnLeft(error);
+    }
 
+    @Test
+    @DisplayName("Not possible to find rarity setting")
+    void should_noPossibleFindRaritySetting() {
+        val seed = 100;
+        val percentageLuckyTotal = 1.0;
+        val uuidRarityLegendary = UUID.randomUUID();
+        val uuidRarityRare = UUID.randomUUID();
+        val uuidRarityCommon = UUID.randomUUID();
+        val rarityDeckSettings = List.of(
+                RarityDeckSetting.builder()
+                        .idRarity(uuidRarityLegendary)
+                        .percentageLucky(0.05)
+                        .build(),
+                RarityDeckSetting.builder()
+                        .idRarity(uuidRarityRare)
+                        .percentageLucky(0.2)
+                        .build()
+        );
+        val deckSetting = DeckSetting.builder()
+                .nameDeckType("Silver")
+                .numberCard(3)
+                .rarityDeckSettings(rarityDeckSettings)
+                .build();
+        val actual = drawHeroService.drawDeck(seed, deckSetting, percentageLuckyTotal);
+        val error = new ApplicationError("Not possible to find rarity setting", null, deckSetting, null);
+        assertThat(actual).containsOnLeft(error);
     }
 
 

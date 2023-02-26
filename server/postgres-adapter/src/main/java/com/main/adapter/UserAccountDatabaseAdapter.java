@@ -69,4 +69,5 @@ public class UserAccountDatabaseAdapter implements UserAccountPersistenceSpi {
         }
         return Option.of(UserMapper.toDomain(entityUser.get()));
     }
+
 }

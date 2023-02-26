@@ -1,4 +1,4 @@
-package com.main.dto.mapper;
+package com.main.mapper;
 
 import com.main.functional.model.Hero;
 import com.main.functional.model.Rarity;

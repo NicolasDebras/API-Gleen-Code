@@ -1,6 +1,6 @@
 package com.main.resource;
 
-import com.main.mapper.UserMapper;
+import com.main.mapper.UserAccountMapper;
 import com.main.ports.client.DeckOpenApi;
 import com.main.ports.client.FindDeckUserApi;
 import com.main.ports.client.UserAccountCreatorApi;
@@ -27,10 +27,9 @@ public class UserResource {
 
     @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody UserCreationDto userCreationDto) {
-        val user = UserMapper.toDomain(userCreationDto);
         return userAccountCreatorApi
-                .create(user)
-                .map(UserMapper::toDto)
+                .create(UserAccountMapper.toDomain(userCreationDto))
+                .map(UserAccountMapper::toDto)
                 .fold(ResponseEntity.badRequest()::body, ResponseEntity::ok);
     }
 

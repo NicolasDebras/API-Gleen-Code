@@ -5,7 +5,7 @@ import com.main.ports.client.HeroCreatorApi;
 import com.main.ports.client.ListHeroApi;
 import com.main.dto.HeroCreationDto;
 import lombok.RequiredArgsConstructor;
-import com.main.dto.mapper.HeroMapper;
+import com.main.mapper.HeroMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

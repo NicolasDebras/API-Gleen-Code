@@ -1,10 +1,10 @@
 package com.main.mapper;
 
 import com.main.dto.UserCreationDto;
-import com.main.functional.model.User;
 import com.main.dto.UserDto;
+import com.main.functional.model.User;
 
-public interface UserMapper {
+public interface UserAccountMapper {
 
     static User toDomain(UserCreationDto dto) {
         return User.builder()

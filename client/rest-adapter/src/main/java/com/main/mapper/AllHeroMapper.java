@@ -10,7 +10,7 @@ public interface AllHeroMapper {
 
     static AllHeroDto toDto(List<Hero> heroes) {
         List<HeroDto> heroDto = heroes.stream()
-                .map(com.main.dto.mapper.HeroMapper::toDto)
+                .map(com.main.mapper.HeroMapper::toDto)
                 .toList();
         return new AllHeroDto(heroDto);
 

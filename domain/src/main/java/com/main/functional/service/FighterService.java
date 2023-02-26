@@ -22,6 +22,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FighterService implements FightCardApi {
 
+    private static final int MAX_LEVEL = 100;
+
+    private static final int MAX_EXPERIENCE = 5;
+
     private final CardPersistenceSpi cardPersistenceSpi;
 
     private final UserAccountPersistenceSpi userAccountPersistenceSpi;
@@ -59,8 +63,7 @@ public class FighterService implements FightCardApi {
 
     private Option<UUID> fight(Card defenseCard, Card attackCard) {
         double defenseCardHealth = calculateHealth(defenseCard);
-        val defenseCardAttack = calculateAttack(defenseCard, attackCard.getHeroType().getName());
-        val attackCardAttack = calculateArmor(attackCard);
+        val attackCardAttack = calculateAttack(defenseCard, attackCard.getHeroType().getName());
         val defenseCardArmor = calculateArmor(defenseCard);
         double attackCardHealth = calculateHealth(attackCard);
         val attackCardArmor = calculateArmor(attackCard);
@@ -108,14 +111,17 @@ public class FighterService implements FightCardApi {
     }
 
     private Either<ApplicationError, Card> updateCardWining(Card card) {
-        if (card.getExperience() < 4) {
+        if (card.getExperience() < MAX_EXPERIENCE-1) {
             return cardPersistenceSpi.updateExperience(card);
         } else {
             val updateUserToken = userAccountPersistenceSpi.updateToken(card.getUser());
             if (updateUserToken.isLeft()) {
                 return Either.left(updateUserToken.getLeft());
             }
-            return cardPersistenceSpi.updateLevel(card);
+            if(card.getLevel().getLevel() < MAX_LEVEL) {
+                return cardPersistenceSpi.updateLevel(card);
+            }
+            return Either.right(card);
         }
     }
 

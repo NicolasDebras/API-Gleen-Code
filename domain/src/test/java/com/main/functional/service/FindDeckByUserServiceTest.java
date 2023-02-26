@@ -69,7 +69,7 @@ class FindDeckByUserServiceTest {
     }
 
     @Test
-    @DisplayName("Should return an error when the deck is not found")
+    @DisplayName("Should return an error when the deck is not found or empty")
     void shouldReturnAnErrorWhenTheDeckIsNotFound(){
         val idUser = UUID.randomUUID();
         val error = new ApplicationError("Not possible to find deck", null, idUser, null);
@@ -79,6 +79,8 @@ class FindDeckByUserServiceTest {
         assertTrue(result.isLeft());
         assertThat(result).containsOnLeft(error);
     }
+
+
 
 
 

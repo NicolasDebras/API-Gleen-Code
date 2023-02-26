@@ -8,8 +8,8 @@ public interface HistorialFightMapper {
     static HistorialFightDto toDto(HistoricalFight historicalFight) {
         return new HistorialFightDto(
                 historicalFight.getId(),
-                historicalFight.getWinner(),
-                historicalFight.getLoser(),
-                historicalFight.getDate());
+                CardMapper.toDto(historicalFight.getWinner()),
+                CardMapper.toDto(historicalFight.getLoser()),
+                historicalFight.getDate().toString());
     }
 }

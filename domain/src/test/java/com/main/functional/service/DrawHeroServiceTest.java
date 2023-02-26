@@ -150,6 +150,7 @@ class DrawHeroServiceTest {
     }
 
     @Test
+    @DisplayName("Is not possible to find level")
     void should_level_not_find() {
         val seed = 100;
         val percentageLuckyTotal = 1.0;

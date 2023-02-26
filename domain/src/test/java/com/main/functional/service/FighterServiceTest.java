@@ -1042,5 +1042,108 @@ class FighterServiceTest {
         assertThat(actual).containsOnLeft(new ApplicationError("Error save Update Token", null, null, null));
     }
 
+    @Test
+    @DisplayName("should create fight winner is defense Card with Max Level")
+    void should_create_fight_withMaxLevel() {
+        val idUserAttack = UUID.randomUUID();
+        val idUserDefense = UUID.randomUUID();
+        val idDefense = UUID.randomUUID();
+        val advantageDefense = AdvantageOtherHero.builder()
+                .name("Wizard")
+                .build();
+        val specialityDefense = Speciality.builder()
+                .name("Tank")
+                .armor(1000)
+                .health(100)
+                .power(20)
+                .advantageOtherHeroes(List.of(advantageDefense))
+                .build();
+        val levelDefense = Level.builder()
+                .level(100)
+                .exp(10.00)
+                .build();
+        val rarityDefense = Rarity.builder()
+                .name("Common")
+                .percentage(0.00)
+                .build();
+        val heroTypeDefense = Hero.builder()
+                .name("Hero")
+                .speciality(specialityDefense)
+                .rarity(rarityDefense)
+                .build();
+        val cardDefense = Card.builder()
+                .id(idDefense)
+                .user(User.builder().id(idUserDefense).build())
+                .heroType(heroTypeDefense)
+                .level(levelDefense)
+                .experience(4)
+                .build();
+
+        val idAttack = UUID.randomUUID();
+        val advantageAttack = AdvantageOtherHero.builder()
+                .name("Murder")
+                .build();
+        val specialityAttack = Speciality.builder()
+                .name("Wizard")
+                .armor(10)
+                .health(700)
+                .power(200)
+                .advantageOtherHeroes(List.of(advantageAttack))
+                .build();
+        val rarityAttack = Rarity.builder()
+                .name("Common")
+                .percentage(0.0)
+                .build();
+        val heroTypeAttack = Hero.builder()
+                .name("Wizard")
+                .speciality(specialityAttack)
+                .rarity(rarityAttack)
+                .build();
+        val cardAttack = Card.builder()
+                .id(idAttack)
+                .user(User.builder().id(idUserAttack).build())
+                .heroType(heroTypeAttack)
+                .level(levelDefense)
+                .experience(0)
+                .build();
+        val cardWinner = Card.builder()
+                .id(idDefense)
+                .user(User.builder().id(idUserDefense).build())
+                .heroType(heroTypeDefense)
+                .level(levelDefense)
+                .experience(1)
+                .build();
+        val cardWinnerUpdate = Card.builder()
+                .id(idDefense)
+                .user(User.builder().id(idUserDefense).build())
+                .heroType(heroTypeDefense)
+                .level(Level.builder()
+                        .level(100)
+                        .exp(10.00)
+                        .build())
+                .experience(4)
+                .build();
+        val fight = Fighter.builder()
+                .defenseCard(Card.builder()
+                        .id(idDefense)
+                        .build())
+                .attackCard(Card.builder()
+                        .id(idAttack)
+                        .build())
+                .build();
+        when(cardPersistenceSpi.findById(eq(idDefense))).thenReturn(Option.of(cardDefense));
+        when(cardPersistenceSpi.findById(eq(idAttack))).thenReturn(Option.of(cardAttack));
+        when(userAccountPersistenceSpi.updateToken(any())).thenReturn(Either.right(User.builder()
+                .id(idUserDefense)
+                .token(2)
+                .build()));
+        when(historicalFightPersistenceSpi.save(any())).thenReturn(Either.right(HistoricalFight.builder()
+                .winner(cardWinner)
+                .loser(cardAttack)
+                .build()));
+        val actual = fighterService.fightCard(fight);
+        assertThat(actual).containsOnRight(cardWinnerUpdate);
+    }
+
 
 }

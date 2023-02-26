@@ -1,7 +1,6 @@
 package com.main.adapter;
 
 import com.main.ApplicationError;
-import com.main.entity.RarityEntity;
 import com.main.functional.model.Hero;
 import com.main.ports.server.HeroPersistenceSpi;
 import io.vavr.control.Either;
@@ -26,11 +25,9 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
     @Override
     @Transactional
     public Option<Hero> findByRarityDraw(UUID idRarity) {
-        val hero = repository.findByRarity(RarityEntity.builder().id(idRarity).build());
-        if (hero.isEmpty()) {
-            return Option.none();
-        }
-        return Option.of(HeroMapper.toDomain(hero.get()));
+        return repository
+                .findRandomHeroByRarity(idRarity)
+                .map(HeroMapper::toDomain);
     }
 
     @Override

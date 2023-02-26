@@ -6,8 +6,8 @@ import com.main.ports.client.UserAccountCreatorApi;
 import com.main.dto.OpenPackDto;
 import com.main.dto.UserCreationDto;
 import lombok.RequiredArgsConstructor;
-import com.main.dto.mapper.PackMapper;
-import com.main.dto.mapper.UserMapper;
+import com.main.mapper.PackMapper;
+import com.main.mapper.UserMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

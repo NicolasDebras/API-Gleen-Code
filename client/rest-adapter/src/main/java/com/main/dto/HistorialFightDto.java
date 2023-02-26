@@ -1,16 +1,17 @@
 package com.main.dto;
 
-import com.main.functional.model.Card;
-
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import java.util.UUID;
 
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+
+@JsonAutoDetect(fieldVisibility = ANY)
 public record HistorialFightDto(
 
         UUID idFight,
 
-        Card cardWinner,
-        Card cardLoser,
+        CardDto cardWinner,
+        CardDto cardLoser,
 
-        LocalDateTime dateFight
+        String dateFight
 ) {}

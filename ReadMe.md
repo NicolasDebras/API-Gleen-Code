@@ -11,5 +11,8 @@ ou avec maven : mvn spring-boot:run
 Après Insérer les scripts dans le dossier scripts dans la base de données Postgresql Sinon ça ne va pas marcher
 Se référer au controller pour tester dans Postman
 
+Tout marche en test
+Sauf le tirage de carte qui ne marche pas encore
+Il sort toujours une mauvaise erreur comme quoi il ne trouve pas la rareté souhaitée
 
 Fumo Aristide - 4A - 2023
